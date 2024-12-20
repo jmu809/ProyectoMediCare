@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'D:/ProyectoMediCare/frontend/src/enviroments/environment'; // Importamos el archivo de entorno
+import { environment } from 'src/environments/environment'; // Importamos el archivo de entorno
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common'; // Importa CommonModule para usar el pipe json
 

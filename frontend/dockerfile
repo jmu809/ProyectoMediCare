@@ -1,13 +1,20 @@
-FROM node:20-alpine
+FROM node:18 AS build
 
 WORKDIR /usr/src/app
 
+# Copiar package.json primero
 COPY package*.json ./
-
 RUN npm install
 
+# Copiar el resto de archivos
 COPY . .
 
-EXPOSE 4200
+# Asegurarse de que la carpeta environments existe y está correcta
+RUN ls -la src/environments || exit 1
 
-CMD ["npm", "start"]
+# Build con configuración de producción explícita
+RUN npm run build -- --configuration=production
+
+FROM nginx:latest
+COPY --from=build /usr/src/app/dist/frontend/browser /usr/share/nginx/html
+EXPOSE 80

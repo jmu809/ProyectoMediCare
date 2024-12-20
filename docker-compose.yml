@@ -7,11 +7,14 @@ services:
       dockerfile: Dockerfile
     container_name: laravel_app
     restart: always
-    volumes:
-      - ./backend:/var/www/html
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
+      - COMPOSER_ALLOW_SUPERUSER=1
+    volumes:
+      - ./backend:/var/www/html
+      #- /var/www/html/vendor
+      #- /var/www/html/storage
     depends_on:
       - db
 
@@ -21,12 +24,12 @@ services:
       dockerfile: Dockerfile
     container_name: angular_app
     restart: always
-    stdin_open: true
     ports:
-      - "4200:4200"
+      - "4200:80"
     volumes:
       - ./frontend:/usr/src/app
-    command: npm start
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
 
   nginx:
     image: nginx:latest
@@ -35,15 +38,15 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/conf.d:/etc/nginx/conf.d
       - ./backend:/var/www/html
     depends_on:
       - laravel
+      - angular
 
   db:
     image: mysql:8
     container_name: mysql_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: medicare
@@ -55,4 +58,4 @@ services:
       - "3306:3306"
 
 volumes:
-  db_data:
+  db_data: {}
