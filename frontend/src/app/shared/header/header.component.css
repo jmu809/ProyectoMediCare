@@ -1,0 +1,48 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+  background-color: #fff; /* Opcional: establece un fondo para el header */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Opcional: añade una sombra para destacar el header */
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  font-size: 14px;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-menu button:hover {
+  background-color: #f0f0f0;
+}
+a {
+  pointer-events: auto; /* Asegúrate de que esto esté configurado */
+  cursor: pointer;
+}

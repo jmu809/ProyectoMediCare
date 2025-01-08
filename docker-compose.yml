@@ -11,10 +11,10 @@ services:
       - APP_ENV=local
       - APP_DEBUG=true
       - COMPOSER_ALLOW_SUPERUSER=1
-    volumes:
-      - ./backend:/var/www/html
-      #- /var/www/html/vendor
-      #- /var/www/html/storage
+    #volumes:
+    #- ./backend:/var/www/html
+    #- /var/www/html/vendor
+    #- /var/www/html/storage
     depends_on:
       - db
 
@@ -26,20 +26,32 @@ services:
     restart: always
     ports:
       - "4200:80"
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
-      - /usr/src/app/dist
+    #volumes:
+    #- ./frontend:/usr/src/app
 
-  nginx:
+  nginx-b:
     image: nginx:latest
     container_name: nginx_server
     restart: always
     ports:
       - "80:80"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./backend:/var/www/html
+    #volumes:
+    #- ./nginx/conf.d:/etc/nginx/conf.d
+    #- ./backend:/var/www/html
+    #- ./frontend:/var/www/html
+    depends_on:
+      - laravel
+      - angular
+  nginx-f:
+    image: nginx:latest
+    container_name: nginx_server
+    restart: always
+    ports:
+      - "80:80"
+    #volumes:
+    #- ./nginx/conf.d:/etc/nginx/conf.d
+    #- ./backend:/var/www/html
+    #- ./frontend:/var/www/html
     depends_on:
       - laravel
       - angular

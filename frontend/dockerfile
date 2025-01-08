@@ -15,6 +15,6 @@ RUN ls -la src/environments || exit 1
 # Build con configuración de producción explícita
 RUN npm run build -- --configuration=production
 
-FROM nginx:latest
-COPY --from=build /usr/src/app/dist/frontend/browser /usr/share/nginx/html
-EXPOSE 80
+#FROM nginx:latest
+#COPY --from=build /usr/src/app/dist/frontend/browser /usr/share/nginx/html
+#EXPOSE 80

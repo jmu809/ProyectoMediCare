@@ -1,51 +1,62 @@
 import { Component } from '@angular/core';
 import {
+  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Observable, of, catchError, tap } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  imports: [
+    ReactiveFormsModule, // Para formGroup y formControlName
+    CommonModule, // Para directivas como *ngIf y *ngFor
+
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  error$ = new Observable<string>();
   isLoading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService // Inyecta el AuthService en lugar de http
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required]],
     });
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      this.error$ = this.authService.login(this.loginForm.value).pipe(
-        tap(() => {
+      const loginData = this.loginForm.value;
+
+      this.authService.login(loginData).subscribe({
+        next: (response: { token: any }) => {
           this.isLoading = false;
-          this.router.navigate(['/dashboard']);
-        }),
-        catchError((error) => {
+          this.authService.setToken(response.token);
+          this.router.navigate(['/index']); // Usa el router en lugar de window.location
+        },
+        error: (err: { error: { message: string } }) => {
           this.isLoading = false;
-          return of(error.message || 'Credenciales inválidas');
-        })
-      );
+          this.errorMessage = err.error?.message || 'Error en el servidor';
+        },
+      });
     }
   }
 }

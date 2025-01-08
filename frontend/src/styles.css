@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+/* Primary Button Override */
+.btn-primary {
+  background-color: #c221f3;
+  border-color: #2196f3;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #c221f3;
+  border-color: #1976d2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #1565c0 !important;
+  border-color: #1565c0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(33, 150, 243, 0.5) !important;
+}
+
+.btn-primary:disabled {
+  background-color: #90caf9;
+  border-color: #90caf9;
+  cursor: not-allowed;
+}
+
+/* Button Transitions */
+.btn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}

@@ -5,5 +5,5 @@ import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes), provideHttpClient()], // Agrega provideHttpClient
+  providers: [provideRouter(routes), provideHttpClient()],
 }).catch((err) => console.error(err));
