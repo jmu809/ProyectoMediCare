@@ -91,6 +91,9 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
   }
+  getDoctors(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/doctors`);
+  }
 }
 
 export class ProtectedService {

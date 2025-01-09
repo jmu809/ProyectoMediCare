@@ -58,4 +58,9 @@ class AuthController extends Controller
       'message' => 'Usuario registrado con éxito',
     ], 201);
   }
+  public function getDoctors()
+  {
+    $doctors = User::where('role_id', 3)->get(['id', 'name', 'lastname']); // Filtrar por rol y seleccionar campos relevantes
+    return response()->json($doctors);
+  }
 }

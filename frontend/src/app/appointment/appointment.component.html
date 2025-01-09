@@ -1,45 +1,44 @@
 <div class="appointment-container">
   <h1>CALENDARIO</h1>
-  <div class="calendar-section">
-    <div class="calendar-box">
-      <p>CALENDARIO</p>
-    </div>
-    <div class="schedule-section">
-      <h2>(día seleccionado)</h2>
-      <h3>Horario disponible</h3>
-      <div class="schedule-grid">
-        <button *ngFor="let time of availableTimes" class="btn btn-light">
-          {{ time }}
-        </button>
-      </div>
-    </div>
+  <div class="calendar-container">
+    <h2>Selecciona una fecha:</h2>
+    <mat-calendar (selectedChange)="onDateChange($event)"></mat-calendar>
+  </div>
+  <h3>Horario disponible</h3>
+  <div class="schedule-grid">
+    <button *ngFor="let time of availableTimes" class="btn btn-light">
+      {{ time }}
+    </button>
+  </div>
+  <div class="selected-date">
+    <p>Fecha seleccionada: {{ selectedDate | date : "fullDate" }}</p>
   </div>
 
   <div class="form-section">
     <label for="doctor">Médico:</label>
     <select id="doctor" formControlName="doctor" class="form-control">
       <option *ngFor="let doctor of doctors" [value]="doctor.id">
-        {{ doctor.name }}
+        {{ doctor.name }} {{ doctor.lastname }}
       </option>
     </select>
+  </div>
 
-    <div *ngIf="user">
-      <div>
-        <label for="name">Nombre: </label>
-        <a>{{ user.name }}</a>
-      </div>
-      <div>
-        <label for="lastname">Apellidos: </label>
-        <a>{{ user.lastname }}</a>
-      </div>
-      <div *ngIf="user.client">
-        <label for="dni">DNI: </label>
-        <a>{{ user.client.cif }}</a>
-      </div>
-      <div *ngIf="user.client">
-        <label for="phone">Teléfono: </label>
-        <a>{{ user.client.tel_number }}</a>
-      </div>
+  <div *ngIf="user">
+    <div>
+      <label for="name">Nombre: </label>
+      <a>{{ user.name }}</a>
+    </div>
+    <div>
+      <label for="lastname">Apellidos: </label>
+      <a>{{ user.lastname }}</a>
+    </div>
+    <div *ngIf="user.client">
+      <label for="dni">DNI: </label>
+      <a>{{ user.client.cif }}</a>
+    </div>
+    <div *ngIf="user.client">
+      <label for="phone">Teléfono: </label>
+      <a>{{ user.client.tel_number }}</a>
     </div>
   </div>
 </div>
