@@ -27,6 +27,7 @@ class AuthController extends Controller
     }
 
     $user = Auth::user();
+    $user->load('client'); // Cargar datos de la relación client
     $token = $user->createToken('authToken')->plainTextToken;
 
     return response()->json([

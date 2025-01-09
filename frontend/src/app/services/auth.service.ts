@@ -24,9 +24,7 @@ export class AuthService {
     return this.http.post(`${environment.apiUrl}/login`, data).pipe(
       tap((response: any) => {
         this.setToken(response.token);
-        if (response.user) {
-          this.setUser(response.user);
-        }
+        this.setUser(response.user);
       })
     );
   }
