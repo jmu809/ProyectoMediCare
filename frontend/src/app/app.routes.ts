@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { IndexComponent } from './index/index.component';
 import { AppointmentComponent } from './appointment/appointment.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -10,4 +11,6 @@ export const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: '', redirectTo: '/index', pathMatch: 'full' },
   { path: 'appointment', component: AppointmentComponent },
+  { path: 'profile', component: ProfileComponent }, // Ruta del perfil
+  { path: '**', redirectTo: '' }, // Manejo de rutas no existentes
 ];

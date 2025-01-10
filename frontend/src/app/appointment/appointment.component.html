@@ -1,44 +1,72 @@
 <div class="appointment-container">
-  <h1>CALENDARIO</h1>
-  <div class="calendar-container">
-    <h2>Selecciona una fecha:</h2>
-    <mat-calendar (selectedChange)="onDateChange($event)"></mat-calendar>
-  </div>
-  <h3>Horario disponible</h3>
-  <div class="schedule-grid">
-    <button *ngFor="let time of availableTimes" class="btn btn-light">
-      {{ time }}
-    </button>
-  </div>
-  <div class="selected-date">
-    <p>Fecha seleccionada: {{ selectedDate | date : "fullDate" }}</p>
-  </div>
+  <br />
+  <br />
+  <br />
 
-  <div class="form-section">
-    <label for="doctor">Médico:</label>
-    <select id="doctor" formControlName="doctor" class="form-control">
-      <option *ngFor="let doctor of doctors" [value]="doctor.id">
-        {{ doctor.name }} {{ doctor.lastname }}
-      </option>
-    </select>
-  </div>
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    <div class="calendar-hours-container">
+      <!-- Calendario -->
+      <div class="calendar-container">
+        <h2>Selecciona una fecha:</h2>
+        <mat-calendar
+          (selectedChange)="onDateChange($event)"
+          [dateClass]="dateClass"
+        ></mat-calendar>
+        <br />
+        <p>Fecha: {{ selectedDate | date : "fullDate" }}</p>
+      </div>
 
-  <div *ngIf="user">
-    <div>
-      <label for="name">Nombre: </label>
-      <a>{{ user.name }}</a>
+      <!-- Horas disponibles -->
+      <div class="hours-container">
+        <h2>Horario disponible:</h2>
+        <div class="schedule-grid">
+          <button
+            *ngFor="let time of availableTimes"
+            class="btn btn-light"
+            (click)="onTimeSelect(time)"
+          >
+            {{ time }}
+          </button>
+        </div>
+        <br />
+        <p>Hora: {{ selectedTime }}</p>
+      </div>
+
+      <!-- Desplegable para seleccionar médico -->
+      <div class="form-section">
+        <label for="doctor">Médico:</label>
+        <select id="doctor" formControlName="doctor" class="form-control">
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            {{ doctor.name }} {{ doctor.lastname }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div>
-      <label for="lastname">Apellidos: </label>
-      <a>{{ user.lastname }}</a>
+    <div *ngIf="user">
+      <div class="data-section">
+        <div class="data-container">
+          <label for="name">Nombre: </label>
+          <a>{{ user.name }}</a>
+        </div>
+        <div class="data-container">
+          <label for="lastname">Apellidos: </label>
+          <a>{{ user.lastname }}</a>
+        </div>
+      </div>
+      <br />
+      <div>
+        <div class="data-section">
+          <div *ngIf="user.client" class="data-container">
+            <label for="dni">DNI: </label>
+            <a>{{ user.client.cif }}</a>
+          </div>
+          <div *ngIf="user.client" class="data-container">
+            <label for="phone">Teléfono: </label>
+            <a>{{ user.client.tel_number }}</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div *ngIf="user.client">
-      <label for="dni">DNI: </label>
-      <a>{{ user.client.cif }}</a>
-    </div>
-    <div *ngIf="user.client">
-      <label for="phone">Teléfono: </label>
-      <a>{{ user.client.tel_number }}</a>
-    </div>
-  </div>
+    <button type="submit" class="btn btn-primary">Crear Cita</button>
+  </form>
 </div>

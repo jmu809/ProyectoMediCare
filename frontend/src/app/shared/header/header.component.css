@@ -46,3 +46,21 @@ a {
   pointer-events: auto; /* Asegúrate de que esto esté configurado */
   cursor: pointer;
 }
+.navbar .dropdown-menu {
+  min-width: 150px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.navbar .rounded-circle {
+  border: 2px solid #ddd;
+  padding: 2px;
+}

@@ -6,22 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
-    {
-        Schema::create('appointments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
-            $table->foreignId('contract_id')->constrained()->onDelete('cascade');
-            $table->dateTime('date_time');
-            $table->string('status');
-            $table->integer('actual_checkups_count');
-            $table->timestamps();
-        });
-    }
+  public function up()
+  {
+    Schema::create('appointments', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('client_id')->constrained()->onDelete('cascade');
+      $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
+      $table->foreignId('contract_id')->constrained()->onDelete('cascade');
+      $table->dateTime('date_time');
+      $table->boolean('status');
+      $table->integer('actual_checkups_count');
+      $table->timestamps();
+    });
+  }
 
-    public function down()
-    {
-        Schema::dropIfExists('appointments');
-    }
-}; 
+  public function down()
+  {
+    Schema::dropIfExists('appointments');
+  }
+};

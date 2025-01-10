@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 /* Primary Button Override */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 .btn-primary {
   background-color: #c221f3;
   border-color: #2196f3;
@@ -34,5 +36,11 @@
   overflow: hidden;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

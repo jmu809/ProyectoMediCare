@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -53,14 +54,23 @@ class AuthController extends Controller
       'role_id' => 2, // Asignar rol predeterminado
     ]);
 
+    $token = $user->createToken('authToken')->plainTextToken;
+
+
+
     return response()->json([
       'success' => true,
-      'message' => 'Usuario registrado con éxito',
+      'user' => $user,
+      'token' => $token,
     ], 201);
   }
   public function getDoctors()
   {
-    $doctors = User::where('role_id', 3)->get(['id', 'name', 'lastname']); // Filtrar por rol y seleccionar campos relevantes
+    $doctors = DB::table('doctors')
+      ->join('users', 'doctors.user_id', '=', 'users.id') // Combina la tabla users y doctors
+      ->select('doctors.id as doctor_id', 'users.name', 'users.lastname') // Obtén el id del doctor
+      ->get();
+
     return response()->json($doctors);
   }
 }

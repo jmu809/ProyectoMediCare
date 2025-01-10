@@ -45,9 +45,13 @@ export class AuthService {
     )[];
     email: any;
   }): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(
-      `${environment.apiUrl}/register`,
-      data
+    return this.http.post(`${environment.apiUrl}/register`, data).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.setToken(response.token);
+          this.setUser(response.user);
+        }
+      })
     );
   }
 
@@ -93,6 +97,18 @@ export class AuthService {
   }
   getDoctors(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/doctors`);
+  }
+
+  createAppointment(appointmentData: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post(
+      `${environment.apiUrl}/appointments`,
+      appointmentData,
+      {
+        headers: headers,
+        withCredentials: true,
+      }
+    );
   }
 }
 

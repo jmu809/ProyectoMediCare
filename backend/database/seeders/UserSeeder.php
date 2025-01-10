@@ -24,8 +24,8 @@ class UserSeeder extends Seeder
       'role_id' => 1, // 1 = admin
     ]);
 
-    // Crear usuario cliente
-    $clientUserId = DB::table('users')->insertGetId([
+    // Crear usuarios clientes
+    $client1Id = DB::table('users')->insertGetId([
       'name' => 'Cliente',
       'lastname' => 'Ejemplo',
       'email' => 'cliente@medicare.com',
@@ -33,31 +33,53 @@ class UserSeeder extends Seeder
       'role_id' => 2, // 2 = cliente
     ]);
 
-    DB::table('clients')->insert([
-      'company_name' => 'Seyte',
-      'cif' => '87654321X',
-      'tel_number' => '987654321',
-      'address' => 'calle de la piruleta',
-      'city' => 'Almería',
-      'state' => 'Tabernas',
-      'postal_code' => '04001',
-      'user_id' => $clientUserId, // Relación con el usuario cliente
+    $client2Id = DB::table('users')->insertGetId([
+      'name' => 'Ana',
+      'lastname' => 'López',
+      'email' => 'ana.lopez@medicare.com',
+      'password' => Hash::make('password'),
+      'role_id' => 2, // 2 = cliente
     ]);
 
-    // Crear usuario doctor
-    DB::table('users')->insert([
-      'name' => 'Doctor',
-      'lastname' => 'Ejemplo',
-      'email' => 'doctor@medicare.com',
-      'password' => Hash::make('password'),
-      'role_id' => 3, // 3 = doctor
+    DB::table('clients')->insert([
+      [
+        'company_name' => 'Seyte',
+        'cif' => '87654321X',
+        'tel_number' => '987654321',
+        'address' => 'calle de la piruleta',
+        'city' => 'Almería',
+        'state' => 'Tabernas',
+        'postal_code' => '04001',
+        'user_id' => $client1Id,
+      ],
+      [
+        'company_name' => 'TechHealth',
+        'cif' => '12345678Y',
+        'tel_number' => '654321987',
+        'address' => 'calle de la salud',
+        'city' => 'Madrid',
+        'state' => 'Madrid',
+        'postal_code' => '28001',
+        'user_id' => $client2Id,
+      ],
     ]);
+
+    // Crear usuarios doctores
     DB::table('users')->insert([
-      'name' => 'Pedro',
-      'lastname' => 'Martinez',
-      'email' => 'pedrom@medicare.com',
-      'password' => Hash::make('password'),
-      'role_id' => 3, // 3 = doctor
+      [
+        'name' => 'Doctor',
+        'lastname' => 'Ejemplo',
+        'email' => 'doctor@medicare.com',
+        'password' => Hash::make('password'),
+        'role_id' => 3, // 3 = doctor
+      ],
+      [
+        'name' => 'Pedro',
+        'lastname' => 'Martinez',
+        'email' => 'pedrom@medicare.com',
+        'password' => Hash::make('password'),
+        'role_id' => 3, // 3 = doctor
+      ],
     ]);
   }
 }

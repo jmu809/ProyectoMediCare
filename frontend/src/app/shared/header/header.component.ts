@@ -31,4 +31,5 @@ export class HeaderComponent {
     this.user = null;
     this.cdr.detectChanges(); // Actualizar el header al cerrar sesión
   }
+  
 }
