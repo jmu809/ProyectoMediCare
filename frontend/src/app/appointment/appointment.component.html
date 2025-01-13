@@ -11,9 +11,8 @@
         <mat-calendar
           (selectedChange)="onDateChange($event)"
           [dateClass]="dateClass"
+          [dateFilter]="isDateDisabled"
         ></mat-calendar>
-        <br />
-        <p>Fecha: {{ selectedDate | date : "fullDate" }}</p>
       </div>
 
       <!-- Horas disponibles -->
@@ -23,25 +22,32 @@
           <button
             *ngFor="let time of availableTimes"
             class="btn btn-light"
-            (click)="onTimeSelect(time)"
+            (click)="onTimeSelect(time, $event)"
+            type="button"
           >
             {{ time }}
           </button>
         </div>
-        <br />
-        <p>Hora: {{ selectedTime }}</p>
-      </div>
-
-      <!-- Desplegable para seleccionar médico -->
-      <div class="form-section">
-        <label for="doctor">Médico:</label>
-        <select id="doctor" formControlName="doctor" class="form-control">
-          <option *ngFor="let doctor of doctors" [value]="doctor.id">
-            {{ doctor.name }} {{ doctor.lastname }}
-          </option>
-        </select>
       </div>
     </div>
+    <hr />
+    <!-- Desplegable para seleccionar médico -->
+    <div class="">
+      <p *ngIf="selectedDate">Fecha : {{ selectedDate | date : "fullDate" }}</p>
+      <p *ngIf="!selectedDate">Por favor, selecciona una fecha.</p>
+      <p *ngIf="selectedTime">Hora: {{ selectedTime }}</p>
+    </div>
+    <hr />
+    <div class="form-section">
+      <label for="doctor">Médico:</label>
+      <select id="doctor" formControlName="doctor" class="form-control">
+        <option *ngFor="let doctor of doctors" [value]="doctor.id">
+          {{ doctor.name }} {{ doctor.lastname }}
+        </option>
+      </select>
+    </div>
+    <br />
+    <!-- Información del usuario -->
     <div *ngIf="user">
       <div class="data-section">
         <div class="data-container">
@@ -67,6 +73,9 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Crear Cita</button>
+    <br />
+    <div class="form-button-container">
+      <button type="submit" class="btn btn-primary">Crear Cita</button>
+    </div>
   </form>
 </div>

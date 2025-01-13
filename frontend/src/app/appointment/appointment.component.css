@@ -3,71 +3,46 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  width: 100%;
 }
 
-.calendar-section {
+.calendar-hours-container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+  gap: 20px;
   width: 80%;
+  flex-wrap: nowrap; /* Evita que los elementos se apilen mientras haya espacio */
 }
 
-.calendar-box {
-  width: 300px;
-  height: 300px;
-  border: 1px solid #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.schedule-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.calendar-container,
+.hours-container {
+  flex: 1; /* Los hace ocupar el mismo espacio */
+  min-width: 300px; /* Evita que sean demasiado pequeños */
 }
 
 .schedule-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Dos columnas */
   gap: 10px;
 }
 
-/* Contenedor principal para el calendario y las horas */
-.calendar-hours-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Alinear al inicio verticalmente */
-  gap: 20px;
-  width: 70%; /* Ajusta el ancho según sea necesario */
-  height: 50%;
-  flex-wrap: wrap; /* Permite que los elementos se apilen si no hay espacio suficiente */
-}
-
-.calendar-container {
-  flex: 1; /* Ocupa una porción del espacio */
-  min-width: 300px; /* Asegura un tamaño mínimo */
-}
-
-.hours-container {
-  flex: 1; /* Ocupa una porción igual que el calendario */
-  min-width: 300px; /* Asegura un tamaño mínimo */
-}
-
 .form-section {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.user-details {
+.data-section {
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
 }
 
-.mat-form-field {
-  width: 100%;
-  margin-top: 10px;
+.data-container {
+  flex: 1;
+  min-width: 150px;
 }
 
 .mat-calendar {
@@ -75,30 +50,34 @@
 }
 
 .selected-date-class {
-  background-color: #3f51b5 !important; /* Color de fondo */
-  color: white !important; /* Color del texto */
-  border-radius: 50%; /* Hacerlo circular */
+  background-color: #3f51b5 !important;
+  color: white !important;
+  border-radius: 50%;
 }
-.data-section {
+/* Contenedor para centrar el botón */
+.form-button-container {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  justify-content: center; /* Centra horizontalmente */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  margin-top: 20px; /* Espacio entre el botón y el contenido anterior */
 }
-.data-container {
-  flex: 1; /* Ocupa una porción igual que el calendario */
-  min-width: 300px; /* Asegura un tamaño mínimo */
-  height: 50%;
+
+/* Botón de "Crear Cita" */
+.form-button-container .btn {
+  padding: 10px 20px;
+  font-size: 16px;
 }
+
 /* Media query para pantallas estrechas */
 @media (max-width: 768px) {
   .calendar-hours-container {
-    flex-direction: column; /* Apila los elementos en lugar de alinearlos en fila */
-    align-items: center; /* Centra los elementos en pantallas estrechas */
+    flex-direction: column; /* Cambia a una columna */
+    align-items: center;
   }
 
   .calendar-container,
   .hours-container {
-    width: 100%; /* Asegura que ocupen todo el ancho disponible */
-    min-width: unset; /* Elimina el tamaño mínimo en pantallas pequeñas */
+    width: 100%; /* Ocupan todo el ancho disponible */
+    min-width: unset; /* Permite reducir el tamaño en pantallas pequeñas */
   }
 }

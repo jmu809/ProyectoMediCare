@@ -110,6 +110,12 @@ export class AuthService {
       }
     );
   }
+  getReservedTimes(date: string): Observable<string[]> {
+    // Reemplaza `/api/appointments/reserved-times` con la URL de tu backend
+    return this.http.get<string[]>(
+      `/api/appointments/reserved-times?date=${date}`
+    );
+  }
 }
 
 export class ProtectedService {
