@@ -1,0 +1,44 @@
+<div class="admin-appointments">
+  <div class="filters">
+    <h2>FILTROS</h2>
+    <button class="btn btn-secondary">Fecha</button>
+    <button class="btn btn-secondary">Cliente</button>
+    <button class="btn btn-secondary">Doctor</button>
+  </div>
+
+  <div class="appointments-table">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Cliente</th>
+          <th>Doctor</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments">
+          <td>{{ appointment.id }}</td>
+          <td>{{ appointment.date_time | date : "yyyy-MM-dd" }}</td>
+          <td>{{ appointment.date_time | date : "HH:mm" }}</td>
+          <td>
+            {{ appointment.client_name }} {{ appointment.client_lastname }}
+          </td>
+          <td>
+            {{ appointment.doctor_name }} {{ appointment.doctor_lastname }}
+          </td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="editAppointment(appointment.id)"
+            >
+              Editar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

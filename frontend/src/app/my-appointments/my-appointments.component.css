@@ -1,0 +1,42 @@
+.appointments-container {
+  padding: 20px;
+}
+
+.appointment-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.error {
+  color: red;
+}
+.appointment-pending {
+  border-left: 5px solid orange;
+}
+
+.appointment-completed {
+  border-left: 5px solid green;
+}
+
+.appointment-cancelled {
+  border-left: 5px solid red;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin: 0;
+}
+.appointments-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}

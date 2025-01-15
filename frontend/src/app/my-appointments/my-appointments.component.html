@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+  </head>
+
+  <body>
+    <div class="appointments-container">
+      <br />
+      <br />
+      <br />
+      <h1>Mis citas</h1>
+      <hr />
+      <div
+        *ngFor="let appointment of appointments"
+        class="appointment-card"
+        [ngClass]="{
+          'appointment-pending': appointment.status_text === 'Pendiente',
+          'appointment-completed': appointment.status_text === 'Completada',
+          'appointment-cancelled': appointment.status_text === 'Cancelada'
+        }"
+      >
+        <p>
+          <strong>Fecha:</strong>
+          {{ appointment.date_time | date : "fullDate" }}
+        </p>
+        <p>
+          <strong>Hora:</strong>
+          {{ appointment.date_time | date : "shortTime" }}
+        </p>
+        <p>
+          <strong>Médico:</strong> {{ appointment.doctor_name }}
+          {{ appointment.doctor_lastname }}
+        </p>
+        <p><strong>Estado:</strong> {{ appointment.status_text }}</p>
+
+        <!-- Botón para cancelar la cita si está pendiente -->
+        <button
+          *ngIf="appointment.status_text === 'Pendiente'"
+          class="btn btn-danger"
+          (click)="cancelAppointment(appointment.id)"
+        >
+          Cancelar Cita
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

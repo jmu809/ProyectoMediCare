@@ -31,6 +31,10 @@ class Appointment extends Model
     return $this->belongsTo(Client::class);
   }
 
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
   /**
    * Relación: La cita pertenece a un médico (usuario con rol = 3).
    */

@@ -64,3 +64,9 @@ a {
   border: 2px solid #ddd;
   padding: 2px;
 }
+.logo img {
+  width: 30px;
+  height: auto;
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}

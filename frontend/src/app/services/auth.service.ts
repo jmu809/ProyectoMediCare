@@ -73,8 +73,13 @@ export class AuthService {
   // Método para obtener la información del usuario
   getUser(): any {
     const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) : null;
+    return user ? JSON.parse(user) : null; // Asegúrate de que el campo 'role' esté disponible
   }
+
+  /*   getUser(): any {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null; // Incluye el campo 'role' si está disponible
+  } */
 
   // Método para cerrar sesión
   logout(): void {
@@ -115,6 +120,10 @@ export class AuthService {
     return this.http.get<string[]>(
       `/api/appointments/reserved-times?date=${date}`
     );
+  }
+  updateClient(clientData: any): Observable<any> {
+    const headers = this.getAuthHeaders(); // Obtener las cabeceras con el token
+    return this.http.put('/api/client/update', clientData, { headers });
   }
 }
 

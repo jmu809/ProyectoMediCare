@@ -2,7 +2,10 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="./logo.png" alt="MediCare Logo" height="40" /> MediCare
+        <div class="logo">
+          <img src="img/logo2.png" alt="MediCare Logo" S />
+          MediCare
+        </div>
       </a>
       <button
         class="navbar-toggler"
@@ -35,6 +38,18 @@
           <li class="nav-item" *ngIf="!user">
             <a class="nav-link" routerLink="/register">Registrarse</a>
           </li>
+          <li class="nav-item" *ngIf="user">
+            <a class="nav-link" routerLink="/myappointments">Mis Citas</a>
+          </li>
+          <li
+            class="nav-item"
+            *ngIf="user && user.role && user.role.name === 'admin'"
+          >
+            <a class="nav-link" routerLink="/adminappointments"
+              >Gestionar Citas</a
+            >
+          </li>
+
           <li class="nav-item" *ngIf="user">
             <a
               class="nav-link"

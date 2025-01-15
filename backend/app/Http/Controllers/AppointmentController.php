@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -69,5 +70,52 @@ class AppointmentController extends Controller
       });
 
     return response()->json($reservedTimes);
+  }
+  public function getUserAppointments(Request $request)
+  {
+    $user = $request->user();
+
+    if (!$user || !$user->client) {
+      return response()->json(['message' => 'No tienes citas registradas.'], 404);
+    }
+
+    $appointments = DB::table('appointments')
+      ->join('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+      ->join('users', 'doctors.user_id', '=', 'users.id')
+      ->where('appointments.client_id', $user->client->id)
+      ->select(
+        'appointments.id',           // Incluye el ID de la cita
+        'users.name as doctor_name',
+        'users.lastname as doctor_lastname',
+        'appointments.date_time',
+        'appointments.status'
+      )
+      ->orderBy('appointments.date_time', 'asc')
+      ->get()
+      ->map(function ($appointment) {
+        $appointment->status_text = match ($appointment->status) {
+          0 => 'Pendiente',
+          1 => 'Completada',
+          2 => 'Cancelada',
+          default => 'Desconocido',
+        };
+        return $appointment;
+      });
+
+    return response()->json($appointments);
+  }
+
+  public function cancelAppointment($id)
+  {
+    $appointment = Appointment::find($id);
+
+    if (!$appointment) {
+      return response()->json(['message' => 'Cita no encontrada.'], 404);
+    }
+
+    $appointment->status = 2; // Cambiar estado a cancelado
+    $appointment->save();
+
+    return response()->json(['message' => 'Cita cancelada con éxito.']);
   }
 }

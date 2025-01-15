@@ -29,6 +29,7 @@ class AuthController extends Controller
 
     $user = Auth::user();
     $user->load('client'); // Cargar datos de la relación client
+    $user->load('role'); // Esto ya está incluido
     $token = $user->createToken('authToken')->plainTextToken;
 
     return response()->json([
@@ -52,6 +53,15 @@ class AuthController extends Controller
       'email' => $validated['email'],
       'password' => Hash::make($validated['password']),
       'role_id' => 2, // Asignar rol predeterminado
+    ]);
+    $user->client()->create([
+      'company_name' => '', // Vacío por ahora
+      'cif' => '', // Vacío por ahora
+      'tel_number' => '', // Vacío por ahora
+      'address' => '', // Vacío por ahora
+      'city' => '', // Vacío por ahora
+      'state' => '', // Vacío por ahora
+      'postal_code' => '', // Vacío por ahora
     ]);
 
     $token = $user->createToken('authToken')->plainTextToken;

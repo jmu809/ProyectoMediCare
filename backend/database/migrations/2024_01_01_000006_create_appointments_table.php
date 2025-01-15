@@ -14,7 +14,7 @@ return new class extends Migration
       $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
       $table->foreignId('contract_id')->constrained()->onDelete('cascade');
       $table->dateTime('date_time');
-      $table->boolean('status');
+      $table->integer('status');
       $table->integer('actual_checkups_count');
       $table->timestamps();
     });

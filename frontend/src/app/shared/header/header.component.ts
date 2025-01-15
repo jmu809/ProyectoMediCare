@@ -1,14 +1,14 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service'; // Adjust the path as needed
+import { AuthService } from '../../services/auth.service'; // Ajusta la ruta según sea necesario
 
 @Component({
   standalone: true,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [RouterModule, CommonModule], // Import RouterModule here
+  imports: [RouterModule, CommonModule], // Importa el RouterModule aquí
 })
 export class HeaderComponent {
   user: any = null;
@@ -19,10 +19,10 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getUser(); // Carga inicial del usuario
+    this.user = this.authService.getUser();
     this.authService.onAuthChange().subscribe((user) => {
       this.user = user;
-      this.cdr.detectChanges(); // Forzar la actualización del header
+      this.cdr.detectChanges();
     });
   }
 
@@ -31,5 +31,4 @@ export class HeaderComponent {
     this.user = null;
     this.cdr.detectChanges(); // Actualizar el header al cerrar sesión
   }
-  
 }

@@ -1,1 +1,113 @@
-<p>profile works!</p>
+<!DOCTYPE html>
+<br />
+<br />
+<br />
+<br />
+
+<div class="profile-container">
+  <h1>Mi Perfil</h1>
+  <!-- Información del Usuario -->
+  <div>
+    <div class="user-info">
+      <h2>Información del Usuario</h2>
+
+      <hr />
+      <p><strong>Nombre:</strong> {{ user?.name || "-" }}</p>
+      <p><strong>Apellidos:</strong> {{ user?.lastname || "-" }}</p>
+      <p><strong>Email:</strong> {{ user?.email || "-" }}</p>
+
+      <p><strong>Empresa:</strong> {{ client?.company_name || "-" }}</p>
+      <p><strong>CIF:</strong> {{ client?.cif || "-" }}</p>
+      <p><strong>Teléfono:</strong> {{ client?.tel_number || "-" }}</p>
+      <p><strong>Dirección:</strong> {{ client?.address || "-" }}</p>
+      <p><strong>Ciudad:</strong> {{ client?.city || "-" }}</p>
+      <p><strong>Provincia:</strong> {{ client?.state || "-" }}</p>
+      <p><strong>Código Postal:</strong> {{ client?.postal_code || "-" }}</p>
+      <br />
+      <!-- Botón para editar debajo de los datos -->
+      <button class="btn btn-primary" (click)="openEditForm()">
+        Editar Perfil
+      </button>
+    </div>
+
+    <!-- Mensaje si no hay información del cliente -->
+    <div *ngIf="!client">
+      <p>No hay información de cliente asociada a este usuario.</p>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay usuario -->
+  <div *ngIf="!user">
+    <p>Cargando datos del usuario...</p>
+  </div>
+
+  <!-- Formulario de Edición -->
+  <div *ngIf="editing && client" class="edit-form">
+    <h2>Editar mis datos</h2>
+    <form>
+      <label>Empresa:</label>
+      <input
+        [(ngModel)]="client.company_name"
+        name="company_name"
+        type="text"
+        class="form-control"
+      />
+
+      <label>CIF:</label>
+      <input
+        [(ngModel)]="client.cif"
+        name="cif"
+        type="text"
+        class="form-control"
+      />
+
+      <label>Teléfono:</label>
+      <input
+        [(ngModel)]="client.tel_number"
+        name="tel_number"
+        type="text"
+        class="form-control"
+      />
+
+      <label>Dirección:</label>
+      <input
+        [(ngModel)]="client.address"
+        name="address"
+        type="text"
+        class="form-control"
+      />
+
+      <label>Ciudad:</label>
+      <input
+        [(ngModel)]="client.city"
+        name="city"
+        type="text"
+        class="form-control"
+      />
+
+      <label>Provincia:</label>
+      <input
+        [(ngModel)]="client.state"
+        name="state"
+        type="text"
+        class="form-control"
+      />
+
+      <label>Código Postal:</label>
+      <input
+        [(ngModel)]="client.postal_code"
+        name="postal_code"
+        type="text"
+        class="form-control"
+      />
+
+      <br />
+      <button type="button" class="btn btn-success" (click)="saveChanges()">
+        Guardar
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

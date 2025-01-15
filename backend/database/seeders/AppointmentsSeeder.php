@@ -16,7 +16,27 @@ class AppointmentsSeeder extends Seeder
       'doctor_id' => 2,
       'contract_id' => 2,
       'date_time' => now()->addDays(3)->setTime(11, 0),
-      'status' => true,
+      'status' => 0,
+      'actual_checkups_count' => 0,
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
+    DB::table('appointments')->insert([
+      'client_id' => 2,
+      'doctor_id' => 2,
+      'contract_id' => 2,
+      'date_time' => now()->addDays(3)->setTime(12, 0),
+      'status' => 1,
+      'actual_checkups_count' => 0,
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
+    DB::table('appointments')->insert([
+      'client_id' => 2,
+      'doctor_id' => 2,
+      'contract_id' => 2,
+      'date_time' => now()->addDays(3)->setTime(12, 0),
+      'status' => 2,
       'actual_checkups_count' => 0,
       'created_at' => now(),
       'updated_at' => now(),

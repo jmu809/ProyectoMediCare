@@ -1,0 +1,53 @@
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info,
+.client-info {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.client-info button {
+  margin-top: 20px;
+}
+
+
+h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+.profile-container {
+  position: relative;
+  padding: 20px;
+}
+
+.edit-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}

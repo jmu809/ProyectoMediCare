@@ -1,32 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 /* Primary Button Override */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
-.btn-primary {
-  background-color: #c221f3;
-  border-color: #2196f3;
-  color: #ffffff;
-  transition: all 0.3s ease;
+html {
+  background-color: #f8f9fa;
+}
+.btn.btn-primary {
+  background-color: #63a5a4; /* Nuevo color de fondo */
+  border-color: #63a5a4; /* Asegura que el borde coincida */
+  color: white; /* Asegúrate de que el texto sea legible */
 }
 
-.btn-primary:hover {
-  background-color: #c221f3;
-  border-color: #1976d2;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.btn.btn-primary:hover {
+  background-color: #558e8d; /* Color más oscuro al pasar el cursor */
+  border-color: #558e8d; /* Borde para el estado hover */
 }
 
-.btn-primary:focus,
-.btn-primary:active {
-  background-color: #1565c0 !important;
-  border-color: #1565c0 !important;
-  box-shadow: 0 0 0 0.25rem rgba(33, 150, 243, 0.5) !important;
+.btn.btn-primary:focus,
+.btn.btn-primary:active {
+  background-color: #4a7d7c; /* Color al hacer clic */
+  border-color: #4a7d7c;
+}
+.spinner-border {
+  color: #63a5a4; /* Cambia el color del spinner */
 }
 
-.btn-primary:disabled {
-  background-color: #90caf9;
-  border-color: #90caf9;
-  cursor: not-allowed;
+.spinner-border-sm {
+  color: #63a5a4; /* Asegúrate de aplicar también a la versión pequeña */
 }
 
 /* Button Transitions */
