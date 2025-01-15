@@ -54,7 +54,7 @@ class AuthController extends Controller
       'password' => Hash::make($validated['password']),
       'role_id' => 2, // Asignar rol predeterminado
     ]);
-    $user->client()->create([
+    $client = $user->client()->create([
       'company_name' => '', // Vacío por ahora
       'cif' => '', // Vacío por ahora
       'tel_number' => '', // Vacío por ahora
@@ -63,10 +63,17 @@ class AuthController extends Controller
       'state' => '', // Vacío por ahora
       'postal_code' => '', // Vacío por ahora
     ]);
+    // Crear el contrato asociado
+    $contract = DB::table('contracts')->insert([
+      'client_id' => $client->id,
+      'start_date' => now(), // Fecha de inicio del contrato
+      'expiration_date' => now()->addYear(), // Fecha de expiración (1 año después)
+      'medical_checkups_count' => 10, // Número inicial de consultas
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
 
     $token = $user->createToken('authToken')->plainTextToken;
-
-
 
     return response()->json([
       'success' => true,

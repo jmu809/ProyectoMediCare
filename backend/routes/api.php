@@ -28,6 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::put('/appointments/{id}/cancel', [AppointmentController::class, 'cancelAppointment']);
 
+Route::middleware('auth:sanctum')->put('/appointments/{id}/status', [AppointmentController::class, 'updateStatus']);
+Route::middleware('auth:sanctum')->get('/doctors', [AuthController::class, 'getDoctors']);
+Route::middleware('auth:sanctum')->get('/api/admin/appointments', [AppointmentController::class, 'getAllAppointments']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('/admin/appointments', [AdminAppointmentController::class, 'getAllAppointments']);

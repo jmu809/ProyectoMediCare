@@ -1,44 +1,114 @@
-<div class="admin-appointments">
-  <div class="filters">
-    <h2>FILTROS</h2>
-    <button class="btn btn-secondary">Fecha</button>
-    <button class="btn btn-secondary">Cliente</button>
-    <button class="btn btn-secondary">Doctor</button>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div class="admin-appointments">
+      <div class="filters">
+        <h2>FILTROS</h2>
+        <div>
+          <label>Rango de Fechas:</label>
+          <input
+            type="date"
+            [(ngModel)]="filters.startDate"
+            class="form-control"
+          />
+          <input
+            type="date"
+            [(ngModel)]="filters.endDate"
+            class="form-control"
+          />
+          <button class="btn btn-primary" (click)="applyFilters()">
+            Filtrar por Fecha
+          </button>
+        </div>
+        <div>
+          <label>Cliente:</label>
+          <input
+            type="text"
+            [(ngModel)]="filters.clientName"
+            placeholder="Buscar por nombre del cliente"
+            class="form-control"
+          />
+          <button class="btn btn-primary" (click)="applyFilters()">
+            Filtrar por Cliente
+          </button>
+        </div>
+        <div>
+          <label>Doctor:</label>
+          <select [(ngModel)]="filters.doctorId" class="form-control">
+            <option value="">Todos</option>
+            <option *ngFor="let doctor of doctors" [value]="doctor.doctor_id">
+              {{ doctor.name }} {{ doctor.lastname }}
+            </option>
+          </select>
+          <button class="btn btn-primary" (click)="applyFilters()">
+            Filtrar por Doctor
+          </button>
+        </div>
+      </div>
 
-  <div class="appointments-table">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Cliente</th>
-          <th>Doctor</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let appointment of appointments">
-          <td>{{ appointment.id }}</td>
-          <td>{{ appointment.date_time | date : "yyyy-MM-dd" }}</td>
-          <td>{{ appointment.date_time | date : "HH:mm" }}</td>
-          <td>
-            {{ appointment.client_name }} {{ appointment.client_lastname }}
-          </td>
-          <td>
-            {{ appointment.doctor_name }} {{ appointment.doctor_lastname }}
-          </td>
-          <td>
-            <button
-              class="btn btn-primary btn-sm"
-              (click)="editAppointment(appointment.id)"
-            >
-              Editar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+      <div class="appointments-table">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Cliente</th>
+              <th>Doctor</th>
+              <th>Pendiente</th>
+              <th>Completa</th>
+              <th>Cancelada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of filteredAppointments">
+              <td>{{ appointment.id }}</td>
+              <td>{{ appointment.date_time | date : "yyyy-MM-dd" }}</td>
+              <td>{{ appointment.date_time | date : "HH:mm" }}</td>
+              <td>
+                {{ appointment.client_name }} {{ appointment.client_lastname }}
+              </td>
+              <td>
+                {{ appointment.doctor_name }} {{ appointment.doctor_lastname }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-warning btn-sm"
+                  [disabled]="appointment.status === 0"
+                  (click)="updateStatus(appointment.id, 0)"
+                >
+                  Pendiente
+                </button>
+              </td>
+              <td>
+                <button
+                  class="btn btn-success btn-sm"
+                  [disabled]="appointment.status === 1"
+                  (click)="updateStatus(appointment.id, 1)"
+                >
+                  Completa
+                </button>
+              </td>
+              <td>
+                <button
+                  class="btn btn-danger btn-sm"
+                  [disabled]="appointment.status === 2"
+                  (click)="updateStatus(appointment.id, 2)"
+                >
+                  Cancelada
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

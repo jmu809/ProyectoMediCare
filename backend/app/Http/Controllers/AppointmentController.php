@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
@@ -17,6 +18,7 @@ class AppointmentController extends Controller
       'doctor_id' => 'required|exists:doctors,id',
       'date_time' => 'required|date_format:Y-m-d H:i',
     ]);
+    Log::info('Datos validados en el backend:', $validated);
 
     $contractId = DB::table('contracts')
       ->where('client_id', $validated['client_id'])
@@ -47,6 +49,15 @@ class AppointmentController extends Controller
       'success' => true,
       'appointment' => $appointment,
     ]);
+  }
+  public function getDoctors()
+  {
+    $doctors = DB::table('doctors')
+      ->join('users', 'doctors.user_id', '=', 'users.id') // Relación con la tabla de usuarios
+      ->select('doctors.id as doctor_id', 'users.name', 'users.lastname') // Obtén doctor_id, nombre y apellido
+      ->get();
+
+    return response()->json($doctors);
   }
 
 
@@ -117,5 +128,68 @@ class AppointmentController extends Controller
     $appointment->save();
 
     return response()->json(['message' => 'Cita cancelada con éxito.']);
+  }
+  public function updateStatus(Request $request, $id)
+  {
+    $appointment = Appointment::find($id);
+
+    if (!$appointment) {
+      return response()->json(['message' => 'Cita no encontrada.'], 404);
+    }
+
+    $validated = $request->validate([
+      'status' => 'required|integer|in:0,1,2', // Validar que sea un estado válido
+    ]);
+
+    $appointment->status = $validated['status'];
+    $appointment->save();
+
+    return response()->json([
+      'message' => 'Estado actualizado con éxito.',
+      'appointment' => $appointment,
+    ]);
+  }
+
+  public function getAllAppointments(Request $request)
+  {
+    $query = DB::table('appointments')
+      ->join('clients', 'appointments.client_id', '=', 'clients.id')
+      ->join('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+      ->join('users as doctor_users', 'doctors.user_id', '=', 'doctor_users.id')
+      ->join('users as client_users', 'clients.user_id', '=', 'client_users.id')
+      ->select(
+        'appointments.id',
+        'appointments.date_time',
+        'appointments.status',
+        'appointments.doctor_id', // Asegúrate de que este campo esté incluido
+        'client_users.name as client_name',
+        'client_users.lastname as client_lastname',
+        'doctor_users.name as doctor_name',
+        'doctor_users.lastname as doctor_lastname'
+      );
+
+    // Filtrar por rango de fechas
+    if ($request->has('startDate') && $request->has('endDate')) {
+      $query->whereBetween('appointments.date_time', [
+        $request->startDate,
+        $request->endDate,
+      ]);
+    }
+
+    // Filtrar por cliente
+    if ($request->has('clientName')) {
+      $query->where(DB::raw('CONCAT(client_users.name, " ", client_users.lastname)'), 'like', '%' . $request->clientName . '%');
+    }
+
+    // Filtrar por doctor
+    if ($request->has('doctorId')) {
+      Log::info('Valor recibido para doctorId:', ['doctorId' => $request->doctorId]);
+      $query->where('appointments.doctor_id', $request->doctorId);
+    }
+
+
+    $appointments = $query->orderBy('appointments.date_time', 'asc')->get();
+
+    return response()->json($appointments);
   }
 }

@@ -154,16 +154,23 @@ export class AppointmentComponent {
   };
 
   ngOnInit(): void {
+    // Obtener usuario autenticado
     this.authService.onAuthChange().subscribe((user) => {
-      this.user = user; // Cargar usuario y cliente
+      this.user = user;
     });
 
-    this.authService.getDoctors().subscribe((doctors) => {
-      this.doctors = doctors.map((doctor) => ({
-        id: doctor.doctor_id, // Cambiar a doctor_id
-        name: doctor.name,
-        lastname: doctor.lastname,
-      }));
+    // Cargar doctores
+    this.authService.getDoctors().subscribe({
+      next: (doctors) => {
+        this.doctors = doctors.map((doctor) => ({
+          id: doctor.doctor_id, // Asegúrate de que este campo coincida con el backend
+          name: doctor.name,
+          lastname: doctor.lastname,
+        }));
+      },
+      error: (err) => {
+        console.error('Error al cargar los doctores:', err);
+      },
     });
   }
 
@@ -189,7 +196,7 @@ export class AppointmentComponent {
 
     const appointmentData = {
       client_id: this.user.client.id,
-      doctor_id: this.appointmentForm.value.doctor,
+      doctor_id: parseInt(this.appointmentForm.value.doctor, 10), // Convertimos el doctor_id a número
       date_time: formattedDateTime,
     };
 

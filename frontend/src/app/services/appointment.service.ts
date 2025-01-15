@@ -36,4 +36,27 @@ export class AppointmentService {
 
     return this.http.get<any[]>('/api/admin/appointments', { headers });
   }
+  updateAppointmentStatus(
+    appointmentId: number,
+    status: number
+  ): Observable<any> {
+    const headers = this.authService.getAuthHeaders(); // Obtén las cabeceras con el token
+    return this.http.put(
+      `/api/appointments/${appointmentId}/status`,
+      { status }, // Envía el estado como payload
+      { headers }
+    );
+  }
+  getDoctors(): Observable<any[]> {
+    const headers = this.authService.getAuthHeaders(); // Agregar las cabeceras con el token
+    return this.http.get<any[]>('/api/doctors', { headers });
+  }
+
+  getFilteredAppointments(filters: any): Observable<any[]> {
+    const headers = this.authService.getAuthHeaders(); // Agregar las cabeceras con el token
+    return this.http.get<any[]>('/api/appointments', {
+      headers,
+      params: filters, // Pasar los filtros como parámetros de consulta
+    });
+  }
 }
