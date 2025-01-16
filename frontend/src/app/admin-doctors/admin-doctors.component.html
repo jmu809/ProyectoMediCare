@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Médicos</title>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div class="admin-doctors">
+      <div class="layout-container">
+        <!-- Filtros en la barra lateral -->
+        <div class="filters">
+          <h2>FILTROS</h2>
+          <div>
+            <label for="name">Nombre:</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.name"
+              placeholder="Buscar por nombre"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="email">Correo:</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.email"
+              placeholder="Buscar por correo"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="studies">Estudios:</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.studies"
+              placeholder="Buscar por estudios"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="numAppointments">Número de Citas:</label>
+            <input
+              type="range"
+              [(ngModel)]="filters.numAppointments"
+              [min]="0"
+              [max]="filters.numAppointments"
+              class="form-range"
+            />
+            <span>Hasta {{ filters.numAppointments }}</span>
+          </div>
+          <div class="button-container">
+            <button class="btn btn-primary" (click)="applyFilters()">
+              Aplicar Filtros
+            </button>
+            <button class="btn btn-secondary" (click)="clearFilters()">
+              Limpiar Filtros
+            </button>
+            <!-- Botón para añadir un nuevo médico -->
+            <button
+              class="btn btn-success mt-3"
+              (click)="navigateToAddDoctor()"
+            >
+              Añadir Médico
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de doctores -->
+        <div class="table-container">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Estudios</th>
+                <th>Premios</th>
+                <th>Descripción</th>
+                <th>NumCitas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doctor of filteredDoctors">
+                <td>{{ doctor.user_id }}</td>
+                <td>{{ doctor.name }}</td>
+                <td>{{ doctor.lastname }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>{{ doctor.studies }}</td>
+                <td>{{ doctor.awards }}</td>
+                <td>{{ doctor.description }}</td>
+                <td>{{ doctor.num_citas }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

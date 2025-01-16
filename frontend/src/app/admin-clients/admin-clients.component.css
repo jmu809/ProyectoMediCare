@@ -1,0 +1,67 @@
+.admin-clients {
+  padding: 20px;
+}
+
+.layout-container {
+  display: flex;
+  gap: 20px; /* Espacio entre los filtros y la tabla */
+}
+
+.filters {
+  width: 250px; /* Ancho de la barra lateral */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.filters h2 {
+  margin-bottom: 15px;
+}
+
+.filters .form-control,
+.filters .form-range {
+  margin-bottom: 15px;
+}
+
+.table-container {
+  flex-grow: 1; /* La tabla ocupa el resto del espacio */
+}
+
+.clients-table {
+  flex: 3.5; /* Ajusta el espacio restante para la tabla */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: bold;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternar colores de filas */
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

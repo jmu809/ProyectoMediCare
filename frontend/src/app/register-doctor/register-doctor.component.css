@@ -1,0 +1,108 @@
+/* Contenedor principal */
+.register-container {
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 50px auto; /* Centra el formulario vertical y horizontalmente */
+  padding: 20px;
+  border: 1px solid #ddd; /* Borde sutil */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: #f9f9f9; /* Fondo claro */
+  font-family: Arial, sans-serif; /* Tipografía */
+}
+
+/* Título del formulario */
+.register-container h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Grupos de formularios */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block; /* Asegura que el label esté separado del input */
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Inputs del formulario */
+.form-group input {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Borde sutil */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #007bff; /* Color del borde al enfocarse */
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra de enfoque */
+}
+
+/* Botón principal */
+.btn {
+  display: block;
+  width: 100%; /* Botón ancho completo */
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Texto de ayuda */
+.text-center {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.text-center a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
+}
+.form-group textarea {
+  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Borde sutil */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+  box-sizing: border-box; /* Para que el padding no altere el tamaño */
+  resize: vertical; /* Permitir redimensionar solo verticalmente */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea:focus {
+  border-color: #007bff; /* Borde azul al enfocar */
+  outline: none; /* Quitar el borde predeterminado */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
+}
+
+/* Para los labels */
+.form-group label {
+  font-weight: bold;
+  color: #555; /* Color gris oscuro */
+  margin-bottom: 5px;
+  display: block; /* Para que quede alineado encima del campo */
+}
+
+/* Opcional: Ajustar el contenedor */
+.form-group {
+  margin-bottom: 15px; /* Separación entre grupos */
+}

@@ -49,6 +49,22 @@
               >Gestionar Citas</a
             >
           </li>
+          <li
+            class="nav-item"
+            *ngIf="user && user.role && user.role.name === 'admin'"
+          >
+            <a class="nav-link" routerLink="/admin-clients"
+              >Gestionar Clientes</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            *ngIf="user && user.role && user.role.name === 'admin'"
+          >
+            <a class="nav-link" routerLink="/admin-doctors"
+              >Gestionar Medicos</a
+            >
+          </li>
 
           <li class="nav-item" *ngIf="user">
             <a

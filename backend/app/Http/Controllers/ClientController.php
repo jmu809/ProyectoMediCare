@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class ClientController extends Controller
 {
@@ -57,5 +59,26 @@ class ClientController extends Controller
       'message' => 'Datos del cliente actualizados con éxito.',
       'client' => $client,
     ]);
+  }
+  public function getClients()
+  {
+    // Obtener todos los usuarios con rol de cliente
+    $clients = User::where('role_id', 2) // 2 = rol de cliente
+      ->join('clients', 'users.id', '=', 'clients.user_id') // Relación con la tabla clients
+      ->leftJoin('contracts', 'clients.id', '=', 'contracts.client_id') // Relación con la tabla contracts
+      ->select(
+        'users.id as user_id',
+        'users.name',
+        'users.lastname',
+        'users.email',
+        'clients.cif as dni',
+        'clients.company_name as company',
+        'clients.city as city',
+        'clients.tel_number as tel_number',
+        'contracts.medical_checkups_count as num_citas'
+      )
+      ->get();
+
+    return response()->json($clients);
   }
 }
