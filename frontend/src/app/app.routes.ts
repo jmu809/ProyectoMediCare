@@ -26,10 +26,21 @@ export const routes: Routes = [
     component: AdminAppointmentsComponent,
     canActivate: [AdminGuard], // Protege la ruta con el guard
   },
-  { path: 'admin-clients', component: AdminClientsComponent },
-  { path: 'admin-doctors', component: AdminDoctorsComponent },
-  { path: 'register-doctor', component: RegisterDoctorComponent }, // Ruta futura
-
+  {
+    path: 'admin-clients',
+    component: AdminClientsComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'admin-doctors',
+    component: AdminDoctorsComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'register-doctor',
+    component: RegisterDoctorComponent,
+    canActivate: [AdminGuard],
+  }, // Ruta futura
   {
     path: 'doctor-appointments',
     component: DoctorAppointmentsComponent,
