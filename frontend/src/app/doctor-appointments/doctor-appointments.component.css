@@ -1,3 +1,11 @@
+html {
+  background-color: #f8f9fa;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
 .filters {
   flex: 0.5; /* Reduce el ancho del filtro */
   border: 1px solid #ccc;
@@ -38,4 +46,17 @@
 .btn {
   font-size: 12px;
   padding: 5px 10px;
+}
+.container {
+  max-width: 1200px; /* Ancho máximo */
+  margin: 0 auto; /* Centramos el contenido */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+  background-color: #f9f9f9; /* Fondo claro */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Espaciado para las tablas */
+.appointments-table {
+  margin-top: 20px;
 }

@@ -4,6 +4,11 @@
 html {
   background-color: #f8f9fa;
 }
+
+body {
+  background-color: #f8f9fa;
+}
+
 .btn.btn-primary {
   background-color: #63a5a4; /* Nuevo color de fondo */
   border-color: #63a5a4; /* Asegura que el borde coincida */
@@ -38,6 +43,7 @@ html {
 html,
 body {
   height: 100%;
+  background-color: #f8f9fa;
 }
 body {
   margin: 0;

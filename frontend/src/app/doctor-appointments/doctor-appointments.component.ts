@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../services/appointment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WeeklyCalendarComponent } from '../weekly-calendar/weekly-calendar.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, WeeklyCalendarComponent],
   selector: 'app-doctor-appointments',
   templateUrl: './doctor-appointments.component.html',
   styleUrls: ['./doctor-appointments.component.css'],

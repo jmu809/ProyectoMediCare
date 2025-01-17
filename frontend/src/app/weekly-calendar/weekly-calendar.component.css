@@ -1,0 +1,99 @@
+.btn.btn-primary {
+  background-color: #63a5a4; /* Nuevo color de fondo */
+  border-color: #63a5a4; /* Asegura que el borde coincida */
+  color: white; /* Asegúrate de que el texto sea legible */
+}
+
+.btn.btn-primary:hover {
+  background-color: #558e8d; /* Color más oscuro al pasar el cursor */
+  border-color: #558e8d; /* Borde para el estado hover */
+}
+
+.btn.btn-primary:focus,
+.btn.btn-primary:active {
+  background-color: #4a7d7c; /* Color al hacer clic */
+  border-color: #4a7d7c;
+}
+.spinner-border {
+  color: #63a5a4; /* Cambia el color del spinner */
+}
+
+.spinner-border-sm {
+  color: #63a5a4; /* Asegúrate de aplicar también a la versión pequeña */
+}
+.calendar-container {
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 20px;
+  background-color: white;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  min-width: 800px;
+}
+.header-cell {
+  padding: 10px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: bold;
+}
+.time-cell {
+  padding: 10px;
+  border-right: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  text-align: right;
+}
+.calendar-cell {
+  border: 1px solid #dee2e6;
+  min-height: 60px;
+  padding: 5px;
+}
+.appointment {
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  font-size: 0.8em;
+  color: white;
+}
+.appointment.status-0 {
+  background-color: #ffc107;
+  color: black;
+} /* Pendiente */
+.appointment.status-1 {
+  background-color: #28a745;
+} /* Completa */
+.calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+.nav-button {
+  font-size: 12px;
+  padding: 5px 10px;
+  background-color: #0d6efd;
+  border: 1px solid #0d6efd;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.nav-button:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+.current-week {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.today {
+  background-color: #f8f9fa;
+}
+.calendar-wrapper {
+  padding: 20px;
+}
