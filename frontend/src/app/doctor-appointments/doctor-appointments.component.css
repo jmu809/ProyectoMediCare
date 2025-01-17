@@ -1,0 +1,41 @@
+.filters {
+  flex: 0.5; /* Reduce el ancho del filtro */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.admin-appointments {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.filters h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.filters .btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.appointments-table {
+  flex: 3.5; /* Ajusta el espacio restante para la tabla */
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #f8f9fa;
+}
+
+.btn {
+  font-size: 12px;
+  padding: 5px 10px;
+}

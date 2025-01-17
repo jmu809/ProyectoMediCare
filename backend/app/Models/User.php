@@ -61,4 +61,8 @@ class User extends Authenticatable
   {
     return $this->belongsTo(Role::class);
   }
+  public function doctor()
+  {
+    return $this->hasOne(Doctor::class, 'user_id'); // user_id es la clave foránea en la tabla doctors
+  }
 }

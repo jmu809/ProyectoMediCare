@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service'; // Asegúrate de importar correctamente
 
@@ -7,6 +7,8 @@ import { AuthService } from './auth.service'; // Asegúrate de importar correcta
   providedIn: 'root',
 })
 export class AppointmentService {
+  private apiUrl = '/api'; // Asegúrate de que coincida con la URL base del backend
+
   cancelAppointment(appointmentId: number): Observable<any> {
     const url = `/api/appointments/${appointmentId}/cancel`;
     return this.http.put(url, {}); // Enviar solicitud PUT con el ID de la cita
@@ -58,5 +60,13 @@ export class AppointmentService {
       headers,
       params: filters, // Pasar los filtros como parámetros de consulta
     });
+  }
+  getDoctorAppointments(): Observable<any> {
+    const token = localStorage.getItem('token'); // Asegúrate de que el token se guarde en localStorage al iniciar sesión
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get(`${this.apiUrl}/doctor-appointments`, { headers });
   }
 }

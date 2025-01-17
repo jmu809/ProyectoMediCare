@@ -10,6 +10,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { AdminClientsComponent } from './admin-clients/admin-clients.component';
 import { AdminDoctorsComponent } from './admin-doctors/admin-doctors.component';
 import { RegisterDoctorComponent } from './register-doctor/register-doctor.component';
+import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appointments.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'admin-clients', component: AdminClientsComponent },
   { path: 'admin-doctors', component: AdminDoctorsComponent },
   { path: 'register-doctor', component: RegisterDoctorComponent }, // Ruta futura
+  { path: 'doctor-appointment', component: DoctorAppointmentsComponent },
 
   { path: '**', redirectTo: '' }, // Manejo de rutas no existentes
 ];

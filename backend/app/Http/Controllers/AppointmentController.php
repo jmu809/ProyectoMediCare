@@ -60,6 +60,43 @@ class AppointmentController extends Controller
     return response()->json($doctors);
   }
 
+  public function getDoctorAppointments(Request $request)
+  {
+    try {
+      $user = Auth::user();
+      Log::info('Usuario autenticado:', ['user' => $user]);
+
+      if (!$user || !$user->doctor) {
+        Log::warning('El usuario no tiene una relación con Doctor:', ['userId' => $user->id ?? 'No autenticado']);
+        return response()->json(['message' => 'No autorizado.'], 403);
+      }
+
+      $doctorId = $user->doctor->id;
+      Log::info('Cargando citas para el doctor:', ['doctorId' => $doctorId]);
+
+      $appointments = DB::table('appointments')
+        ->join('clients', 'appointments.client_id', '=', 'clients.id')
+        ->join('users as client_users', 'clients.user_id', '=', 'client_users.id')
+        ->where('appointments.doctor_id', $doctorId)
+        ->select(
+          'appointments.id',
+          'appointments.date_time',
+          'appointments.status',
+          'client_users.name as client_name',
+          'client_users.lastname as client_lastname'
+        )
+        ->orderBy('appointments.date_time', 'asc')
+        ->get();
+
+      Log::info('Citas cargadas:', ['appointments' => $appointments]);
+
+      return response()->json($appointments);
+    } catch (\Exception $e) {
+      Log::error('Error al obtener citas del médico:', ['error' => $e->getMessage()]);
+      return response()->json(['message' => 'Error interno del servidor.'], 500);
+    }
+  }
+
 
   public function getReservedTimes(Request $request)
   {
