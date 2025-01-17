@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -8,13 +13,18 @@ import { AuthService } from '../services/auth.service';
 export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
-    const user = this.authService.getUser();
-    if (user && user.role.name === 'admin') {
-      return true; // Permitir acceso
-    }
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    const token = this.authService.getToken(); // Verifica si hay un token
+    const userRole = this.authService.getRole(); // Obtiene el rol del usuario
 
-    this.router.navigate(['/login']); // Redirigir si no es administrador
-    return false; // Denegar acceso
+    if (token && userRole === 'admin') {
+      return true; // Permite el acceso si el rol es admin
+    } else {
+      this.router.navigate(['/login']); // Redirige al login si no es admin
+      return false;
+    }
   }
 }

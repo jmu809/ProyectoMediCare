@@ -15,21 +15,39 @@ interface RegisterResponse {
 export class AuthService {
   private tokenKey = 'token';
   private userKey = 'user';
-  private userSubject = new BehaviorSubject<any>(this.getUser());
+  private roleKey = 'role'; // Nuevo para almacenar el rol
+  private userSubject = new BehaviorSubject<any>(this.getUser()); // Emite el estado del usuario
 
   constructor(private http: HttpClient) {}
 
   // Método para iniciar sesión
-  login(data: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/login`, data).pipe(
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`/api/login`, credentials).pipe(
       tap((response: any) => {
         this.setToken(response.token);
         this.setUser(response.user);
+        this.setRole(response.user.role.name); // Guardar el rol
+        this.userSubject.next(response.user); // Emitir cambios en el estado del usuario
       })
     );
   }
 
-  // Método para emitir cambios de usuario
+  // Obtener el rol del usuario
+  getRole(): string | null {
+    return localStorage.getItem(this.roleKey);
+  }
+
+  // Guardar el rol del usuario
+  setRole(role: string): void {
+    localStorage.setItem(this.roleKey, role);
+  }
+
+  // Verificar si el usuario está autenticado
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  // Emitir cambios de usuario
   onAuthChange(): Observable<any> {
     return this.userSubject.asObservable();
   }
@@ -50,49 +68,48 @@ export class AuthService {
         if (response.token) {
           this.setToken(response.token);
           this.setUser(response.user);
+          this.setRole(response.user.role.name); // Guardar el rol
+          this.userSubject.next(response.user); // Emitir cambios en el estado del usuario
         }
       })
     );
   }
 
-  // Método para guardar el token
+  // Guardar el token
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }
 
-  // Método para obtener el token
+  // Obtener el token
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  // Método para guardar la información del usuario
+  // Guardar la información del usuario
   setUser(user: any): void {
     localStorage.setItem(this.userKey, JSON.stringify(user));
   }
 
-  // Método para obtener la información del usuario
+  // Obtener la información del usuario
   getUser(): any {
     const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) : null; // Asegúrate de que el campo 'role' esté disponible
+    return user ? JSON.parse(user) : null;
   }
 
-  /*   getUser(): any {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null; // Incluye el campo 'role' si está disponible
-  } */
-
-  // Método para cerrar sesión
+  // Cerrar sesión
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
+    localStorage.removeItem(this.roleKey);
+    this.userSubject.next(null); // Emitir que no hay usuario
   }
 
-  // Método para verificar si el usuario está autenticado
+  // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
-  // Método para obtener los headers con el token
+  // Obtener headers con el token
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders({
@@ -100,6 +117,7 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
   }
+
   getDoctors(): Observable<any[]> {
     const headers = this.getAuthHeaders(); // Incluye el token si es necesario
     return this.http.get<any[]>('/api/doctors', { headers });
@@ -116,12 +134,13 @@ export class AuthService {
       }
     );
   }
+
   getReservedTimes(date: string): Observable<string[]> {
-    // Reemplaza `/api/appointments/reserved-times` con la URL de tu backend
     return this.http.get<string[]>(
       `/api/appointments/reserved-times?date=${date}`
     );
   }
+
   updateClient(clientData: any): Observable<any> {
     const headers = this.getAuthHeaders(); // Obtener las cabeceras con el token
     return this.http.put('/api/client/update', clientData, { headers });

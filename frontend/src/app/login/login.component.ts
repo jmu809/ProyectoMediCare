@@ -18,9 +18,6 @@ import { AuthService } from '../services/auth.service';
   imports: [
     ReactiveFormsModule, // Para formGroup y formControlName
     CommonModule, // Para directivas como *ngIf y *ngFor
-
-    CommonModule,
-    ReactiveFormsModule,
     RouterModule,
   ],
 })
@@ -47,10 +44,24 @@ export class LoginComponent {
       const loginData = this.loginForm.value;
 
       this.authService.login(loginData).subscribe({
-        next: (response: { token: any }) => {
+        next: (response: {
+          token: string;
+          user: { role: { name: string } };
+        }) => {
           this.isLoading = false;
           this.authService.setToken(response.token);
-          this.router.navigate(['/index']); // Usa el router en lugar de window.location
+
+          // Almacenar el rol como un string en localStorage
+          localStorage.setItem('role', response.user.role.name);
+
+          // Redirigir según el rol
+          if (response.user.role.name === 'doctor') {
+            this.router.navigate(['/doctor-appointments']);
+          } else if (response.user.role.name === 'admin') {
+            this.router.navigate(['/admin-appointments']);
+          } else {
+            this.router.navigate(['/index']);
+          }
         },
         error: (err: { error: { message: string } }) => {
           this.isLoading = false;
