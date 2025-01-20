@@ -45,17 +45,29 @@ export class RegisterComponent {
         lastName: this.registerForm.value.lastName,
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,
-        password_confirmation: this.registerForm.value.confirmPassword, // Mapea correctamente
+        password_confirmation: this.registerForm.value.confirmPassword,
       };
 
       this.authService.register(formData).subscribe({
         next: (response) => {
-          console.log('Registro exitoso', response);
           window.location.href = '/index';
         },
         error: (err) => {
-          console.error('Error en el registro', err);
-          alert(err.error.message || 'Error en el registro');
+          console.error('Error en el registro:', err);
+
+          // Manejar errores de validación específicos
+          if (err.status === 422) {
+            const errorDetails = err.error.errors; // Captura los errores específicos
+            if (errorDetails?.email) {
+              this.errorMessage = 'El correo electrónico ya está en uso.';
+            } else {
+              this.errorMessage =
+                'Error de validación. Por favor revisa los datos ingresados.';
+            }
+          } else {
+            this.errorMessage =
+              err.error?.message || 'Error en el registro. Intenta más tarde.';
+          }
         },
       });
     }

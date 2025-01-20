@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
@@ -53,24 +53,11 @@ export class AuthService {
   }
 
   // Método para registrar un nuevo usuario
-  register(data: {
-    firstName: any;
-    lastName: any;
-    password: any;
-    password_confirmation: (
-      | string
-      | ((control: AbstractControl) => ValidationErrors | null)
-    )[];
-    email: any;
-  }): Observable<RegisterResponse> {
-    return this.http.post(`${environment.apiUrl}/register`, data).pipe(
-      tap((response: any) => {
-        if (response.token) {
-          this.setToken(response.token);
-          this.setUser(response.user);
-          this.setRole(response.user.role.name); // Guardar el rol
-          this.userSubject.next(response.user); // Emitir cambios en el estado del usuario
-        }
+  register(data: any): Observable<any> {
+    return this.http.post('/api/register', data).pipe(
+      catchError((error) => {
+        console.error('Error en el registro:', error);
+        return throwError(() => error);
       })
     );
   }

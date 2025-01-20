@@ -8,6 +8,12 @@
   <body>
     <div class="register-container">
       <h2>Registro</h2>
+
+      <!-- Mostrar mensaje de error -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
       <form
         [formGroup]="registerForm"
         (ngSubmit)="onSubmit()"

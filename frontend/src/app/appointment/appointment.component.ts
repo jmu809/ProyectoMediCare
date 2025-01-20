@@ -58,6 +58,7 @@ export class AppointmentComponent {
   ];
   selectedDate: Date | null = null;
   selectedTime: string | null = null; // Nueva propiedad para almacenar la hora seleccionada
+  missingClientDataMessage: string = ''; // Mensaje para datos faltantes
 
   constructor(
     private fb: FormBuilder,
@@ -157,14 +158,23 @@ export class AppointmentComponent {
     // Obtener usuario autenticado
     this.authService.onAuthChange().subscribe((user) => {
       this.user = user;
+
+      // Validar datos del cliente
+      if (this.user?.client) {
+        const { tel_number, cif } = this.user.client;
+        if (!tel_number || !cif) {
+          this.missingClientDataMessage =
+            'Por favor, complete su número de teléfono y DNI en la página de perfil.';
+        }
+      }
     });
 
-    // Cargar doctores
-    if (this.user) {
+    // Cargar doctores solo si los datos del cliente están completos
+    if (this.user?.client?.tel_number && this.user?.client?.cif) {
       this.authService.getDoctors().subscribe({
         next: (doctors) => {
           this.doctors = doctors.map((doctor) => ({
-            id: doctor.doctor_id, // Asegúrate de que este campo coincida con el backend
+            id: doctor.doctor_id,
             name: doctor.name,
             lastname: doctor.lastname,
           }));
