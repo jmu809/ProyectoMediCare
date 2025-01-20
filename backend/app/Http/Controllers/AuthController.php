@@ -84,8 +84,8 @@ class AuthController extends Controller
   public function getDoctors()
   {
     $doctors = DB::table('doctors')
-      ->join('users', 'doctors.user_id', '=', 'users.id') // Combina la tabla users y doctors
-      ->select('doctors.id as doctor_id', 'users.name', 'users.lastname') // Obtén el id del doctor
+      ->join('users', 'doctors.user_id', '=', 'users.id')
+      ->select('doctors.id as doctor_id', 'users.name', 'users.lastname')
       ->get();
 
     return response()->json($doctors);

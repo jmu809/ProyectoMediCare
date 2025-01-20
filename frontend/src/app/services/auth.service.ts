@@ -106,8 +106,7 @@ export class AuthService {
   }
 
   getDoctors(): Observable<any[]> {
-    const headers = this.getAuthHeaders(); // Incluye el token si es necesario
-    return this.http.get<any[]>('/api/doctors', { headers });
+    return this.http.get<any[]>('/api/doctors'); // URL del backend
   }
 
   createAppointment(appointmentData: any): Observable<any> {

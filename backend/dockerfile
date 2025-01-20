@@ -1,35 +1,33 @@
-FROM php:8.2-fpm
+FROM php:8.1-fpm
 
-# Instalar extensiones necesarias
+# Instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
+    curl \
     zip \
     unzip \
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install pdo pdo_mysql gd
+    git \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    && docker-php-ext-install pdo pdo_mysql
 
-# Cambiar listen en www.conf para que PHP-FPM escuche en todas las interfaces
-RUN sed -i 's/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/' /usr/local/etc/php-fpm.d/www.conf
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Configurar directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos del proyecto
+# Copiar archivos de la aplicación
 COPY . .
 
 # Instalar dependencias de Laravel
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install
+RUN composer install
 
-# Configurar permisos
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+# Permisos
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Exponer el puerto 9000
-EXPOSE 9000
+# Puerto
+EXPOSE 8000
 
-# Comando para iniciar PHP-FPM
-CMD ["php-fpm"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

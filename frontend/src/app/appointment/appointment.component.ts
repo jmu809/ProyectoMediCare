@@ -153,13 +153,11 @@ export class AppointmentComponent {
 
     return result ? 'selected-date-class' : '';
   };
-
   ngOnInit(): void {
     // Obtener usuario autenticado
     this.authService.onAuthChange().subscribe((user) => {
       this.user = user;
 
-      // Validar datos del cliente
       if (this.user?.client) {
         const { tel_number, cif } = this.user.client;
         if (!tel_number || !cif) {
@@ -169,21 +167,23 @@ export class AppointmentComponent {
       }
     });
 
-    // Cargar doctores solo si los datos del cliente están completos
-    if (this.user?.client?.tel_number && this.user?.client?.cif) {
-      this.authService.getDoctors().subscribe({
-        next: (doctors) => {
+    // Cargar doctores
+    this.authService.getDoctors().subscribe({
+      next: (doctors) => {
+        if (doctors.length > 0) {
           this.doctors = doctors.map((doctor) => ({
             id: doctor.doctor_id,
             name: doctor.name,
             lastname: doctor.lastname,
           }));
-        },
-        error: (err) => {
-          console.error('Error al cargar los doctores:', err);
-        },
-      });
-    }
+        } else {
+          console.warn('No se encontraron médicos disponibles.');
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar los doctores:', err);
+      },
+    });
   }
 
   createAppointment(): void {

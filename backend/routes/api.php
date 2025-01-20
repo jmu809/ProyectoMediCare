@@ -58,3 +58,4 @@ Route::get('/appointments/{id}', [AppointmentController::class, 'show']);
 Route::put('/appointments/{id}', [AppointmentController::class, 'update']);
 
 Route::get('/contracts', [ContractController::class, 'getAllContracts']);
+Route::get('/doctors', [AppointmentController::class, 'getDoctors']);
