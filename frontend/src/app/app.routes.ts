@@ -12,6 +12,11 @@ import { AdminDoctorsComponent } from './admin-doctors/admin-doctors.component';
 import { RegisterDoctorComponent } from './register-doctor/register-doctor.component';
 import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appointments.component';
 import { AuthGuard } from './guards/auth.guard';
+import { RegisterClientComponent } from './register-client/register-client.component';
+import { EditClientComponent } from './edit-client/edit-client.component';
+import { EditAppointmentComponent } from './edit-appointment/edit-appointment.component';
+import { AdminContractsComponent } from './admin-contracts/admin-contracts.component';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,5 +56,24 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./login/login.component').then((m) => m.LoginComponent),
   },
+  {
+    path: 'register-client',
+    component: RegisterClientComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'edit-client/:id',
+    component: EditClientComponent,
+    canActivate: [AdminGuard], // Solo accesible para administradores
+  },
+  {
+    path: 'admin-contracts',
+    component: AdminContractsComponent,
+    canActivate: [AdminGuard], // Solo accesible para administradores
+  },
+  { path: 'mantenimiento', component: MantenimientoComponent },
+  // Otras rutas...
+  { path: 'edit-appointment/:id', component: EditAppointmentComponent },
+
   { path: '**', redirectTo: '' }, // Manejo de rutas no existentes
 ];

@@ -1,3 +1,4 @@
+/* Contenedor principal */
 html {
   background-color: #f8f9fa;
 }
@@ -6,7 +7,6 @@ body {
   background-color: #f8f9fa;
 }
 
-/* Contenedor principal */
 .register-container {
   max-width: 400px; /* Ancho máximo del formulario */
   margin: 50px auto; /* Centra el formulario vertical y horizontalmente */

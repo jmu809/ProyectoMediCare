@@ -81,3 +81,28 @@
     min-width: unset; /* Permite reducir el tamaño en pantallas pequeñas */
   }
 }
+.not-authenticated-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.not-authenticated-container h1 {
+  font-size: 2rem;
+  color: #63a5a4;
+  margin-bottom: 10px;
+}
+
+.not-authenticated-container p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.not-authenticated-container a.link {
+  color: #63a5a4;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.not-authenticated-container a.link:hover {
+  text-decoration: underline;
+}

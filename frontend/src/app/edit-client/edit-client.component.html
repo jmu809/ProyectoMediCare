@@ -1,0 +1,106 @@
+<div class="edit-client-container">
+  <h2>Editar Cliente</h2>
+  <form [formGroup]="editClientForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Introduce el nombre"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastname">Apellido</label>
+      <input
+        type="text"
+        id="lastname"
+        formControlName="lastname"
+        placeholder="Introduce el apellido"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Correo Electrónico</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Introduce el correo electrónico"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="company_name">Empresa</label>
+      <input
+        type="text"
+        id="company_name"
+        formControlName="company_name"
+        placeholder="Introduce la empresa"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="cif">CIF</label>
+      <input
+        type="text"
+        id="cif"
+        formControlName="cif"
+        placeholder="Introduce el CIF"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="tel_number">Teléfono</label>
+      <input
+        type="text"
+        id="tel_number"
+        formControlName="tel_number"
+        placeholder="Introduce el teléfono"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="address">Dirección</label>
+      <input
+        type="text"
+        id="address"
+        formControlName="address"
+        placeholder="Introduce la dirección"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="city">Ciudad</label>
+      <input
+        type="text"
+        id="city"
+        formControlName="city"
+        placeholder="Introduce la ciudad"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="state">Estado</label>
+      <input
+        type="text"
+        id="state"
+        formControlName="state"
+        placeholder="Introduce el estado"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="postal_code">Código Postal</label>
+      <input
+        type="text"
+        id="postal_code"
+        formControlName="postal_code"
+        placeholder="Introduce el código postal"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</div>

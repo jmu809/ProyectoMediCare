@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Contratos</title>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div class="admin-contracts">
+      <div class="layout-container">
+        <!-- Filtros en la barra lateral -->
+        <div class="filters">
+          <h2>FILTROS</h2>
+          <div>
+            <label for="clientName">Cliente:</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.clientName"
+              placeholder="Buscar por nombre del cliente"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="startDate">Fecha de Inicio:</label>
+            <input
+              type="date"
+              [(ngModel)]="filters.startDate"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="expirationDate">Fecha de Expiración:</label>
+            <input
+              type="date"
+              [(ngModel)]="filters.expirationDate"
+              class="form-control"
+            />
+          </div>
+          <div>
+            <label for="medicalCheckups">Reconocimientos:</label>
+            <input
+              type="range"
+              [(ngModel)]="filters.medicalCheckups"
+              [min]="0"
+              [max]="filters.maxCheckups"
+              class="form-range"
+            />
+            <span>Hasta {{ filters.medicalCheckups }}</span>
+          </div>
+          <div class="button-container">
+            <button class="btn btn-primary" (click)="applyFilters()">
+              Aplicar Filtros
+            </button>
+            <button class="btn btn-secondary" (click)="clearFilters()">
+              Limpiar Filtros
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de contratos -->
+        <div class="table-container">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Expiración</th>
+                <th>Reconocimientos Totales</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contract of filteredContracts">
+                <td>{{ contract.id }}</td>
+                <td>
+                  {{ contract.client_name }} {{ contract.client_lastname }}
+                </td>
+                <td>{{ contract.start_date }}</td>
+                <td>{{ contract.expiration_date }}</td>
+                <td>{{ contract.medical_checkups_count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

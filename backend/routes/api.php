@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminAppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorRegistrationController;
+use App\Http\Controllers\ContractController;
 
 
 Route::middleware('api')->group(function () {
@@ -49,3 +50,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('/doctor-appointments', [AppointmentController::class, 'getDoctorAppointments']);
 });
 Route::middleware('auth:sanctum')->get('/doctor-appointments', [AppointmentController::class, 'getDoctorAppointments']);
+Route::post('/register-client', [ClientController::class, 'registerClient']);
+Route::get('/clients/{id}', [ClientController::class, 'show']);
+Route::put('/clients/{id}', [ClientController::class, 'updateEditedClient']);
+
+Route::get('/appointments/{id}', [AppointmentController::class, 'show']);
+Route::put('/appointments/{id}', [AppointmentController::class, 'update']);
+
+Route::get('/contracts', [ContractController::class, 'getAllContracts']);

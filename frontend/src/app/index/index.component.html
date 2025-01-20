@@ -1,11 +1,53 @@
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido a MediCare</title>
+  </head>
+  <br />
+  <br />
+  <br />
+  <body>
+    <!-- Cabecera -->
+    <header class="header">
+      <h1>Bienvenido a MediCare</h1>
+      <p>Gestión de citas médicas al alcance de tu mano</p>
+    </header>
 
-<div class="container">
-  <h1>Bienvenido a MediCare</h1>
-  <div class="button-container">
-    <button routerLink="/login">Iniciar Sesión</button>
-  </div>
-  <div class="button-container">
-    <button href="/register">Iniciar Sesión</button>
-  </div>
-</div>
+    <!-- Sección principal -->
+    <main class="main-container">
+      <!-- Tarjeta de información -->
+      <div class="card">
+        <h3>Reserva tu Cita</h3>
+        <p>Accede al sistema para gestionar tus citas médicas fácilmente.</p>
+        <a href="/appointment" class="btn">Reserva Ahora</a>
+      </div>
+
+      <!-- Tarjeta de registro -->
+      <div class="card">
+        <h3>Regístrate</h3>
+        <p>
+          ¿Eres nuevo? Crea una cuenta en pocos pasos y accede a nuestros
+          servicios.
+        </p>
+        <a href="/register" class="btn">Regístrate</a>
+      </div>
+
+      <!-- Tarjeta de inicio de sesión -->
+      <div class="card">
+        <h3>Inicia Sesión</h3>
+        <p>¿Ya tienes una cuenta? Ingresa para acceder a tu perfil y citas.</p>
+        <a href="/login" class="btn">Inicia Sesión</a>
+      </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+      <p>
+        MediCare &copy; 2025. Todos los derechos reservados. |
+        <a href="/terms" class="footer-link">Términos y Condiciones</a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -69,4 +69,14 @@ export class AppointmentService {
 
     return this.http.get(`${this.apiUrl}/doctor-appointments`, { headers });
   }
+  getAppointmentById(appointmentId: number): Observable<any> {
+    return this.http.get(`/api/appointments/${appointmentId}`);
+  }
+
+  updateAppointmentMed(
+    appointmentId: number,
+    appointmentData: any
+  ): Observable<any> {
+    return this.http.put(`/api/appointments/${appointmentId}`, appointmentData);
+  }
 }

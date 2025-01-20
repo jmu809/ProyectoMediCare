@@ -78,6 +78,14 @@
               Limpiar Filtros
             </button>
           </div>
+          <div class="button-container2">
+            <button
+              class="btn btn-success mt-3"
+              (click)="navigateToAddClient()"
+            >
+              Añadir Cliente
+            </button>
+          </div>
         </div>
 
         <!-- Tabla de clientes -->
@@ -93,7 +101,9 @@
                 <th>Empresa</th>
                 <th>Ciudad</th>
                 <th>Teléfono</th>
-                <th>NumCitas</th>
+                <th>NumRecon</th>
+                <th>Acciones</th>
+                <!-- Nueva columna -->
               </tr>
             </thead>
             <tbody>
@@ -107,6 +117,14 @@
                 <td>{{ client.city }}</td>
                 <td>{{ client.tel_number }}</td>
                 <td>{{ client.num_citas }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    (click)="navigateToEditClient(client.user_id)"
+                  >
+                    Editar
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>

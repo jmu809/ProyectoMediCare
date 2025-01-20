@@ -3,6 +3,7 @@ import { AppointmentService } from '../services/appointment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WeeklyCalendarComponent } from '../weekly-calendar/weekly-calendar.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -21,7 +22,10 @@ export class DoctorAppointmentsComponent implements OnInit {
     clientName: '',
   };
 
-  constructor(private appointmentService: AppointmentService) {}
+  constructor(
+    private appointmentService: AppointmentService,
+    private router: Router
+  ) {}
 
   loadDoctorAppointments(): void {
     this.appointmentService.getDoctorAppointments().subscribe({
@@ -96,5 +100,8 @@ export class DoctorAppointmentsComponent implements OnInit {
     }
 
     this.loadDoctorAppointments();
+  }
+  navigateToEditAppointment(appointmentId: number): void {
+    this.router.navigate(['/edit-appointment', appointmentId]); // Redirige a la nueva página
   }
 }

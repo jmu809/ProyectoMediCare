@@ -160,18 +160,20 @@ export class AppointmentComponent {
     });
 
     // Cargar doctores
-    this.authService.getDoctors().subscribe({
-      next: (doctors) => {
-        this.doctors = doctors.map((doctor) => ({
-          id: doctor.doctor_id, // Asegúrate de que este campo coincida con el backend
-          name: doctor.name,
-          lastname: doctor.lastname,
-        }));
-      },
-      error: (err) => {
-        console.error('Error al cargar los doctores:', err);
-      },
-    });
+    if (this.user) {
+      this.authService.getDoctors().subscribe({
+        next: (doctors) => {
+          this.doctors = doctors.map((doctor) => ({
+            id: doctor.doctor_id, // Asegúrate de que este campo coincida con el backend
+            name: doctor.name,
+            lastname: doctor.lastname,
+          }));
+        },
+        error: (err) => {
+          console.error('Error al cargar los doctores:', err);
+        },
+      });
+    }
   }
 
   createAppointment(): void {

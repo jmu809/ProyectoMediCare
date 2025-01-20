@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../services/client.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -25,7 +26,7 @@ export class AdminClientsComponent implements OnInit {
     numCitas: 100, // Valor inicial del filtro máximo
   };
 
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService, private router: Router) {} // Inyecta el Router correctamente) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -100,5 +101,11 @@ export class AdminClientsComponent implements OnInit {
       numCitas: this.maxCitas, // Restaurar al valor máximo
     };
     this.filteredClients = this.clients; // Restaurar la lista completa
+  }
+  navigateToAddClient() {
+    this.router.navigate(['/register-client']); // Ruta de la página de registro
+  }
+  navigateToEditClient(userId: number): void {
+    this.router.navigate(['/edit-client', userId]);
   }
 }

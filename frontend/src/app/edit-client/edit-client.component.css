@@ -1,3 +1,4 @@
+/* Contenedor principal */
 html {
   background-color: #f8f9fa;
 }
@@ -6,8 +7,7 @@ body {
   background-color: #f8f9fa;
 }
 
-/* Contenedor principal */
-.register-container {
+.edit-container {
   max-width: 400px; /* Ancho máximo del formulario */
   margin: 50px auto; /* Centra el formulario vertical y horizontalmente */
   padding: 20px;
@@ -19,7 +19,7 @@ body {
 }
 
 /* Título del formulario */
-.register-container h2 {
+.edit-container h2 {
   text-align: center;
   color: #333;
   font-size: 24px;
@@ -39,7 +39,9 @@ body {
 }
 
 /* Inputs del formulario */
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
   width: 100%; /* Ocupa todo el ancho del contenedor */
   padding: 10px;
   font-size: 14px;
@@ -49,10 +51,17 @@ body {
   box-sizing: border-box;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
   border-color: #007bff; /* Color del borde al enfocarse */
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra de enfoque */
+}
+
+/* Textareas */
+.form-group textarea {
+  resize: vertical; /* Permitir redimensionar solo verticalmente */
 }
 
 /* Botón principal */
@@ -66,6 +75,12 @@ body {
   border-radius: 4px; /* Bordes redondeados */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: #007bff; /* Fondo azul */
+  color: #fff; /* Texto blanco */
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Fondo azul más oscuro */
 }
 
 /* Texto de ayuda */
@@ -83,34 +98,4 @@ body {
 
 .text-center a:hover {
   text-decoration: underline;
-}
-.form-group textarea {
-  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc; /* Borde sutil */
-  border-radius: 4px; /* Bordes redondeados */
-  background-color: #fff; /* Fondo blanco */
-  box-sizing: border-box; /* Para que el padding no altere el tamaño */
-  resize: vertical; /* Permitir redimensionar solo verticalmente */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group textarea:focus {
-  border-color: #007bff; /* Borde azul al enfocar */
-  outline: none; /* Quitar el borde predeterminado */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
-}
-
-/* Para los labels */
-.form-group label {
-  font-weight: bold;
-  color: #555; /* Color gris oscuro */
-  margin-bottom: 5px;
-  display: block; /* Para que quede alineado encima del campo */
-}
-
-/* Opcional: Ajustar el contenedor */
-.form-group {
-  margin-bottom: 15px; /* Separación entre grupos */
 }

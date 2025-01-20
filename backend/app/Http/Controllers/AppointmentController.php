@@ -229,4 +229,94 @@ class AppointmentController extends Controller
 
     return response()->json($appointments);
   }
+
+  public function show($id)
+  {
+    try {
+      $appointment = DB::table('appointments')
+        ->join('clients', 'appointments.client_id', '=', 'clients.id')
+        ->join('users as client_users', 'clients.user_id', '=', 'client_users.id')
+        ->select(
+          'appointments.id',
+          'appointments.date_time',
+          'appointments.status',
+          'appointments.actual_checkups_count',
+          'appointments.doctor_notes',
+          'client_users.name as client_name',
+          'client_users.lastname as client_lastname'
+        )
+        ->where('appointments.id', $id)
+        ->first();
+
+      if (!$appointment) {
+        return response()->json(['message' => 'Cita no encontrada.'], 404);
+      }
+
+      Log::info('Cita obtenida correctamente:', ['appointment' => $appointment]);
+
+      return response()->json($appointment, 200);
+    } catch (\Exception $e) {
+      Log::error('Error al obtener la cita:', ['error' => $e->getMessage()]);
+      return response()->json(['message' => 'Error interno del servidor.'], 500);
+    }
+  }
+  public function update(Request $request, $id)
+  {
+    try {
+      // Buscar la cita
+      $appointment = Appointment::find($id);
+
+      if (!$appointment) {
+        return response()->json(['message' => 'Cita no encontrada.'], 404);
+      }
+
+      // Validar los datos recibidos
+      $validated = $request->validate([
+        'status' => 'required|integer|in:0,1,2', // Validar que el estado sea válido
+        'actual_checkups_count' => 'required|integer|min:0', // Número de reconocimientos no negativo
+        'doctor_notes' => 'nullable|string', // Las notas pueden ser nulas
+      ]);
+
+      // Obtener el contrato asociado a la cita
+      $contract = $appointment->contract;
+
+      if (!$contract) {
+        return response()->json(['message' => 'Contrato asociado no encontrado.'], 404);
+      }
+
+      // Calcular la diferencia en los chequeos
+      $previousCheckups = $appointment->actual_checkups_count;
+      $newCheckups = $validated['actual_checkups_count'];
+      $checkupDifference = $newCheckups - $previousCheckups;
+
+      // Actualizar el número de chequeos del contrato
+      $contract->medical_checkups_count += $checkupDifference;
+      $contract->save();
+
+      // Actualizar los campos de la cita
+      $appointment->status = $validated['status'];
+      $appointment->actual_checkups_count = $newCheckups;
+      $appointment->doctor_notes = $validated['doctor_notes'];
+
+      // Guardar los cambios
+      $appointment->save();
+
+      Log::info('Cita y contrato actualizados correctamente:', [
+        'appointment' => $appointment,
+        'contract' => $contract,
+      ]);
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Cita actualizada correctamente.',
+        'appointment' => $appointment,
+      ], 200);
+    } catch (\Exception $e) {
+      Log::error('Error al actualizar la cita:', ['error' => $e->getMessage()]);
+      return response()->json([
+        'success' => false,
+        'message' => 'Error interno del servidor.',
+      ], 500);
+    }
+  }
 }

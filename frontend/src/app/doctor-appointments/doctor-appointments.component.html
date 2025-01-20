@@ -59,6 +59,8 @@
                 <th>Pendiente</th>
                 <th>Completa</th>
                 <th>Cancelada</th>
+                <th>Editar</th>
+                <!-- Nueva columna -->
               </tr>
             </thead>
             <tbody>
@@ -95,6 +97,14 @@
                     (click)="updateStatus(appointment.id, 2)"
                   >
                     Cancelada
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-info btn-sm"
+                    (click)="navigateToEditAppointment(appointment.id)"
+                  >
+                    Editar
                   </button>
                 </td>
               </tr>

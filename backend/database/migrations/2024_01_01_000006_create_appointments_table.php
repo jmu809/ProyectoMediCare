@@ -16,6 +16,7 @@ return new class extends Migration
       $table->dateTime('date_time');
       $table->integer('status');
       $table->integer('actual_checkups_count');
+      $table->text('doctor_notes')->nullable(); // Nueva columna para notas del médico
       $table->timestamps();
     });
   }
