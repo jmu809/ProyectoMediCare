@@ -1,33 +1,36 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
-# Instalar dependencias necesarias
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
+    git \
     curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
     zip \
     unzip \
-    git \
-    libpq-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libfreetype6-dev \
-    && docker-php-ext-install pdo pdo_mysql
+    libzip-dev
+
+# Instalar extensiones PHP
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Establecer directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos de la aplicación
+# Copiar archivos del proyecto
 COPY . .
 
-# Instalar dependencias de Laravel
-RUN composer install
+# Instalar dependencias del proyecto
+RUN composer install --no-scripts --no-autoloader
 
-# Permisos
+# Generar autoloader optimizado
+RUN composer dump-autoload --optimize
+
+# Configurar permisos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Puerto
-EXPOSE 8000
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+EXPOSE 9000
+CMD ["php-fpm"]

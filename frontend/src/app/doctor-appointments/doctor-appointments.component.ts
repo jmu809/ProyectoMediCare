@@ -20,6 +20,7 @@ export class DoctorAppointmentsComponent implements OnInit {
     startDate: '',
     endDate: '',
     clientName: '',
+    status: '',
   };
 
   constructor(
@@ -54,8 +55,10 @@ export class DoctorAppointmentsComponent implements OnInit {
         `${appointment.client_name} ${appointment.client_lastname}`
           .toLowerCase()
           .includes(this.filters.clientName.toLowerCase());
-
-      return matchesDate && matchesClient;
+      const matchesStatus =
+        this.filters.status === '' || // Si no hay filtro, coinciden todos los estados
+        Number(appointment.status) === Number(this.filters.status);
+      return matchesDate && matchesClient && matchesStatus;
     });
   }
 

@@ -46,6 +46,23 @@
               Filtrar por Cliente
             </button>
           </div>
+          <div>
+            <label>Estado:</label>
+
+            <select [(ngModel)]="filters.status" class="form-control">
+              <option value="">Todos</option>
+
+              <option value="0">Pendiente</option>
+
+              <option value="1">Completa</option>
+
+              <option value="2">Cancelada</option>
+            </select>
+
+            <button class="btn btn-primary" (click)="applyFilters()">
+              Filtrar por Estado
+            </button>
+          </div>
         </div>
 
         <div class="appointments-table">
@@ -56,6 +73,7 @@
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th>Cliente</th>
+                <th>Estado</th>
                 <th>Pendiente</th>
                 <th>Completa</th>
                 <th>Cancelada</th>
@@ -71,6 +89,14 @@
                 <td>
                   {{ appointment.client_name }}
                   {{ appointment.client_lastname }}
+                </td>
+                <td>
+                  <!-- Mostrar el estado en texto -->
+
+                  <span *ngIf="appointment.status === 0">Pendiente</span>
+                  <span *ngIf="appointment.status === 1">Completa</span>
+
+                  <span *ngIf="appointment.status === 2">Cancelada</span>
                 </td>
                 <td>
                   <button

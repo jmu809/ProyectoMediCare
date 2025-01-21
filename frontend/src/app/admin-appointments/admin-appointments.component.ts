@@ -22,6 +22,7 @@ export class AdminAppointmentsComponent implements OnInit {
     endDate: '',
     clientName: '',
     doctorId: '',
+    status: '',
   };
   constructor(private appointmentService: AppointmentService) {}
 
@@ -55,8 +56,6 @@ export class AdminAppointmentsComponent implements OnInit {
     });
   }
   applyFilters(): void {
-    console.log('Doctor seleccionado para filtrar:', this.filters.doctorId); // Verificar valor del filtro
-
     this.filteredAppointments = this.appointments.filter((appointment) => {
       const matchesDate =
         (!this.filters.startDate ||
@@ -71,18 +70,15 @@ export class AdminAppointmentsComponent implements OnInit {
           .includes(this.filters.clientName.toLowerCase());
 
       const matchesDoctor =
-        !this.filters.doctorId || // Si no hay filtro, coinciden todas las citas
+        !this.filters.doctorId ||
         Number(appointment.doctor_id) === Number(this.filters.doctorId);
 
-      /*       console.log(
-        `Comparando doctor_id: ${appointment.doctor_id} con filtro: ${this.filters.doctorId}. Resultado: ${matchesDoctor}`
-      ); */
+      const matchesStatus =
+        this.filters.status === '' || // Si no hay filtro, coinciden todos los estados
+        Number(appointment.status) === Number(this.filters.status);
 
-      return matchesDate && matchesClient && matchesDoctor;
+      return matchesDate && matchesClient && matchesDoctor && matchesStatus;
     });
-
-    /*     console.log('Citas después del filtrado:', this.filteredAppointments);
-     */
   }
 
   cancelAppointment(appointmentId: number): void {

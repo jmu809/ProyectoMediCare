@@ -1,6 +1,68 @@
-version: "3.9"
+version: "3.8"
 
 services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: always
+    environment:
+      - APP_NAME=Laravel
+      - APP_ENV=local
+      - APP_KEY=${APP_KEY:-base64:5hHdJC5Y+qvIeTD4j0uIMfeDrMONNEyoQ69y//E83s0=}
+      - APP_DEBUG=true
+      - APP_URL=http://localhost
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=medicare
+      - DB_USERNAME=medicare_user
+      - DB_PASSWORD=medicare_password
+      - LOG_CHANNEL=stack
+      - BROADCAST_DRIVER=log
+      - CACHE_DRIVER=file
+      - QUEUE_CONNECTION=sync
+      - SESSION_DRIVER=file
+      - SESSION_LIFETIME=120
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/vendor:/var/www/html/vendor
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: angular_app
+    restart: always
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - app-network
+    command: npm start -- --host 0.0.0.0 --disable-host-check
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_server
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./frontend/dist/frontend:/usr/share/nginx/html
+      - ./backend:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      - backend
+      - frontend
+
   db:
     image: mysql:8
     container_name: mysql_db
@@ -13,56 +75,12 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - app-network
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: medicare_backend
-    environment:
-      APP_NAME: Laravel
-      APP_ENV: local
-      APP_KEY: base64:5hHdJC5Y+qvIeTD4j0uIMfeDrMONNEyoQ69y//E83s0=
-      APP_DEBUG: "true"
-      APP_URL: http://localhost
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: medicare
-      DB_USERNAME: medicare_user
-      DB_PASSWORD: medicare_password
-    volumes:
-      - ./backend:/var/www/html
-    depends_on:
-      - db
-    ports:
-      - "8000:8000"
-    command: php artisan serve --host=0.0.0.0 --port=8000
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: medicare_frontend
-    ports:
-      - "4200:4200"
-    volumes:
-      - ./frontend:/usr/src/app
-    working_dir: /usr/src/app
-    command: npm start
-    depends_on:
-      - backend
-
-  nginx:
-    image: nginx:latest
-    container_name: medicare_nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - backend
-      - frontend
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   db_data:

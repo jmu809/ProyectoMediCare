@@ -17,12 +17,13 @@ export class AuthService {
   private userKey = 'user';
   private roleKey = 'role'; // Nuevo para almacenar el rol
   private userSubject = new BehaviorSubject<any>(this.getUser()); // Emite el estado del usuario
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) {}
 
   // Método para iniciar sesión
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`/api/login`, credentials).pipe(
+    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
         this.setToken(response.token);
         this.setUser(response.user);
@@ -54,7 +55,7 @@ export class AuthService {
 
   // Método para registrar un nuevo usuario
   register(data: any): Observable<any> {
-    return this.http.post('/api/register', data).pipe(
+    return this.http.post(`${this.apiUrl}/register`, data).pipe(
       catchError((error) => {
         console.error('Error en el registro:', error);
         return throwError(() => error);
@@ -106,7 +107,7 @@ export class AuthService {
   }
 
   getDoctors(): Observable<any[]> {
-    return this.http.get<any[]>('/api/doctors'); // URL del backend
+    return this.http.get<any[]>(`${this.apiUrl}/doctors`); // URL del backend
   }
 
   createAppointment(appointmentData: any): Observable<any> {
@@ -123,13 +124,15 @@ export class AuthService {
 
   getReservedTimes(date: string): Observable<string[]> {
     return this.http.get<string[]>(
-      `/api/appointments/reserved-times?date=${date}`
+      `${this.apiUrl}/appointments/reserved-times?date=${date}`
     );
   }
 
   updateClient(clientData: any): Observable<any> {
     const headers = this.getAuthHeaders(); // Obtener las cabeceras con el token
-    return this.http.put('/api/client/update', clientData, { headers });
+    return this.http.put(`${this.apiUrl}/client/update`, clientData, {
+      headers,
+    });
   }
 }
 
